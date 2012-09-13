@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# Run this script like this:
-# curl raw.github.com/clementfarabet/torchinstall/master/install | bash
-
 # Based on Platform:
 if [[ `uname` == 'Darwin' ]]; then
     # GCC?
@@ -19,7 +16,14 @@ if [[ `uname` == 'Darwin' ]]; then
     # Install dependencies:
     brew install git readline cmake wget qt
     brew install libjpeg imagemagick zeromq nodejs
-    brew install mongodb
+
+    # Install NPM
+    if [[ `which npm` == '' ]]; then
+        curl https://npmjs.org/install.sh | sh
+    fi
+
+    # Install Node.js packages
+    npm install express@2.x ejs stripcolorcodes
 
     # Install Torch7
     mkdir -p ~/.torch/torch-pkg; cd ~/.torch/torch-pkg
@@ -31,7 +35,21 @@ if [[ `uname` == 'Darwin' ]]; then
     make install
 
     # Install extra Torch packages:
-    torch-pkg install image parallel webterm nnx
+    torch-pkg install -local image parallel webterm nnx
+
+elif [[ `uname` == 'Linux' ]]; then
+    # Aptitude?
+    if [[ `which apt-get` == '' ]]; then
+        echo '==> apt-get not found, platform not supported'
+        exit
+    fi
+
+    # Install dependencies for Torch:
+    sudo add-apt-repository ppa:chris-lea/zeromq
+    sudo apt-get update
+    sudo apt-get install gcc g++ libreadline5-dev git-core libqt4-core libqt4-gui libqt4-dev
+    sudo apt-get install libjpeg-dev imagemagick nodejs
+    sudo apt-get install libzmq-dev
 
     # Install NPM
     if [[ `which npm` == '' ]]; then
@@ -41,7 +59,20 @@ if [[ `uname` == 'Darwin' ]]; then
     # Install Node.js packages
     npm install express@2.x ejs stripcolorcodes
 
-    # DONE!
-    echo ''
-    echo '==> Install complete, just run ./runserver'
+    # Install Torch:
+    mkdir -p ~/.torch/torch-pkg; cd ~/.torch/torch-pkg
+    git clone https://github.com/andresy/torch
+    mkdir -p torch/build; cd torch/build
+    git pull
+    rm -f CMakeCache.txt
+    cmake .. 
+    make
+    sudo make install
+
+    # Install extra Torch packages:
+    torch-pkg install -local image parallel webterm nnx
+
+else
+    # Unsupported
+    echo '==> platform not supported, aborting'
 fi

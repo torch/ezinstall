@@ -5,4 +5,4 @@ This is just an easy install script for Torch7. Eventually, it will be folded in
 
 The goal of this script is to enable one line installs. To install Torch on any machine, just do:
 
-    curl raw.github.com/clementfarabet/torchinstall/master/install | bash
+    curl https://raw.github.com/clementfarabet/torchinstall/master/install | bash
