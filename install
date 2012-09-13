@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+# Run this script like this:
+# curl raw.github.com/clementfarabet/torchinstall/master/install | bash
+
+# Based on Platform:
+if [[ `uname` == 'Darwin' ]]; then
+    # GCC?
+    if [[ `which gcc` == '' ]]; then
+        echo "MacOS doesn't come with GCC: please install XCode and the command line tools."
+        exit
+    fi
+
+    # Install Homebrew (pkg manager):
+    if [[ `which brew` == '' ]]; then
+        ruby <(curl -fsSkL raw.github.com/mxcl/homebrew/go)
+    fi
+
+    # Install dependencies:
+    brew install git readline cmake wget qt
+    brew install libjpeg imagemagick zeromq nodejs
+    brew install mongodb
+
+    # Install Torch7
+    mkdir -p ~/.torch/torch-pkg; cd ~/.torch/torch-pkg
+    git clone https://github.com/andresy/torch
+    mkdir -p torch/build; cd torch/build
+    git pull
+    rm -f CMakeCache.txt
+    cmake .. 
+    make install
+
+    # Install extra Torch packages:
+    torch-pkg install image parallel webterm nnx
+
+    # Install NPM
+    if [[ `which npm` == '' ]]; then
+        curl https://npmjs.org/install.sh | sh
+    fi
+
+    # Install Node.js packages
+    npm install express@2.x ejs stripcolorcodes
+
+    # DONE!
+    echo ''
+    echo '==> Install complete, just run ./runserver'
+fi
