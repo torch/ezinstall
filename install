@@ -37,6 +37,13 @@ if [[ `uname` == 'Darwin' ]]; then
     # Install extra Torch packages:
     torch-pkg -local install image parallel webterm nnx
 
+    # Done.
+    echo "==> Torch7 has been installed successfully"
+    echo "  + Extra packages [image, parallel, webterm, nnx] have been installed locally"
+    echo "  + To install more packages, do:"
+    echo "    $ torch-pkg list"
+    echo "    $ torch-pkg -local install json"
+
 elif [[ `uname` == 'Linux' ]]; then
     # Aptitude?
     if [[ `which apt-get` == '' ]]; then
@@ -71,6 +78,13 @@ elif [[ `uname` == 'Linux' ]]; then
 
     # Install extra Torch packages:
     torch-pkg -local install image parallel webterm nnx
+
+    # Done.
+    echo "==> Torch7 has been installed successfully"
+    echo "  + Extra packages [image, parallel, webterm, nnx] have been installed locally"
+    echo "  + To install more packages, do:"
+    echo "    $ torch-pkg list"
+    echo "    $ torch-pkg -local install json"
 
 else
     # Unsupported
