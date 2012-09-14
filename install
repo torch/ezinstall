@@ -54,9 +54,9 @@ elif [[ `uname` == 'Linux' ]]; then
     # Install dependencies for Torch:
     sudo add-apt-repository ppa:chris-lea/zeromq
     sudo apt-get update
-    sudo apt-get install gcc g++ libreadline5-dev git-core libqt4-core libqt4-gui libqt4-dev
-    sudo apt-get install libjpeg-dev imagemagick nodejs
-    sudo apt-get install libzmq-dev
+    sudo apt-get install -y gcc g++ libreadline5-dev git-core libqt4-core libqt4-gui libqt4-dev
+    sudo apt-get install -y libjpeg-dev imagemagick nodejs
+    sudo apt-get install -y libzmq-dev
 
     # Install NPM
     if [[ `which npm` == '' ]]; then
