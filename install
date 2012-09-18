@@ -31,7 +31,7 @@ if [[ `uname` == 'Darwin' ]]; then
     mkdir -p torch/build; cd torch/build
     git pull
     rm -f CMakeCache.txt
-    cmake .. 
+    cmake .. -DWITH_LUA_JIT=1
     make install
 
     # Install extra Torch packages:
@@ -72,7 +72,7 @@ elif [[ `uname` == 'Linux' ]]; then
     mkdir -p torch/build; cd torch/build
     git pull
     rm -f CMakeCache.txt
-    cmake .. 
+    cmake .. -DWITH_LUA_JIT=1
     make
     sudo make install
 
