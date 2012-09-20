@@ -38,11 +38,16 @@ if [[ `uname` == 'Darwin' ]]; then
     torch-pkg -local install image parallel webterm nnx
 
     # Done.
+    echo ""
     echo "==> Torch7 has been installed successfully"
     echo "  + Extra packages [image, parallel, webterm, nnx] have been installed locally"
     echo "  + To install more packages, do:"
     echo "    $ torch-pkg list"
     echo "    $ torch-pkg -local install json"
+    echo "  + Note: on MacOS, it's a good idea to install GCC 4.6 to enable OpenMP."
+    echo "          You can do this by installing the GFortran bundles provided here:"
+    echo "          http://gcc.gnu.org/wiki/GFortranBinaries"
+    echo ""
 
 elif [[ `uname` == 'Linux' ]]; then
     # Aptitude?
@@ -76,6 +81,7 @@ elif [[ `uname` == 'Linux' ]]; then
     torch-pkg -local install image parallel webterm nnx
 
     # Done.
+    echo ""
     echo "==> Torch7 has been installed successfully"
     echo "  + Extra packages [image, parallel, webterm, nnx] have been installed locally"
     echo "  + To install more packages, do:"
