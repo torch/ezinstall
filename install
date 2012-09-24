@@ -59,7 +59,11 @@ elif [[ `uname` == 'Linux' ]]; then
     # Install dependencies for Torch:
     sudo add-apt-repository ppa:chris-lea/zeromq
     sudo apt-get update
-    sudo apt-get install -y build-essential gcc g++ cmake libreadline-dev git-core
+    sudo apt-get install -y build-essential
+    sudo apt-get install -y gcc g++
+    sudo apt-get install -y cmake
+    sudo apt-get install -y libreadline-dev
+    sudo apt-get install -y git-core
     sudo apt-get install -y libqt4-core libqt4-gui libqt4-dev
     sudo apt-get install -y libjpeg-dev imagemagick nodejs npm
     sudo apt-get install -y libzmq-dev
