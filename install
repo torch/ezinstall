@@ -35,7 +35,7 @@ if [[ `uname` == 'Darwin' ]]; then
     make install
 
     # Install extra Torch packages:
-    torch-pkg -local install image parallel webterm nnx
+    torch-pkg -local install image parallel webterm optim nnx json
 
     # Done.
     echo ""
@@ -82,7 +82,7 @@ elif [[ `uname` == 'Linux' ]]; then
     sudo make install
 
     # Install extra Torch packages:
-    torch-pkg -local install image parallel webterm nnx
+    torch-pkg -local install image parallel webterm nnx optim json
 
     # Done.
     echo ""
