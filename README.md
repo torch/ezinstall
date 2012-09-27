@@ -10,3 +10,6 @@ The goal of this script is to enable one line installs. To install Torch on any 
 Once installed, you should be able to run Torch with basic libraries:
 
     torch -lnnx -lparallel
+
+This script has been tested on MacOS X 10.8, and Ubuntu 12.04. It should work on earlier 
+Ubuntus and MacOS Xs, but other platforms are not supported.
