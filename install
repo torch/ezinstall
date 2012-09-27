@@ -67,9 +67,17 @@ elif [[ `uname` == 'Linux' ]]; then
     sudo apt-get install -y libqt4-core libqt4-gui libqt4-dev
     sudo apt-get install -y libjpeg-dev imagemagick nodejs npm
     sudo apt-get install -y libzmq-dev
+    sudo apt-get install -y gfortran
 
     # Install Node.js packages
     npm install express@2.x ejs stripcolorcodes
+
+    # Get and build OpenBlas (Torch is much better with a decent Blas)
+    cd /tmp/
+    git clone git://github.com/xianyi/OpenBLAS.git
+    cd OpenBLAS
+    make NO_AFFINITY=1 USE_OPENMP=1
+    sudo make install
 
     # Install Torch:
     mkdir -p ~/.torch/torch-pkg; cd ~/.torch/torch-pkg
