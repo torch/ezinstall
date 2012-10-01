@@ -85,7 +85,7 @@ elif [[ `uname` == 'Linux' ]]; then
     mkdir -p torch/build; cd torch/build
     git pull
     rm -f CMakeCache.txt
-    cmake .. -DWITH_LUA_JIT=1
+    cmake .. -DWITH_LUA_JIT=0
     make
     sudo make install
 
