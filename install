@@ -71,7 +71,7 @@ elif [[ `uname` == 'Linux' ]]; then
     sudo apt-get install -y imagemagick
     sudo apt-get install -y libzmq-dev
     sudo apt-get install -y gfortran
-    sudo apt-get install nodejs npm
+    sudo apt-get install -y nodejs npm
 
     # Install Node.js packages
     npm install express@2.x ejs stripcolorcodes
