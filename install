@@ -23,7 +23,7 @@ if [[ `uname` == 'Darwin' ]]; then
     fi
 
     # Install Node.js packages
-    npm install express@2.x ejs stripcolorcodes
+    npm install -g express@2.x ejs stripcolorcodes
 
     # Install Torch7
     mkdir -p ~/.torch/torch-pkg; cd ~/.torch/torch-pkg
