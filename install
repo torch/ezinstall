@@ -111,14 +111,20 @@ echo "   home..[[/.luarocks]],"                                  >> ~/.luarocks/
 echo "   [[/usr/local]]"                                         >> ~/.luarocks/config.lua
 echo "}"                                                         >> ~/.luarocks/config.lua
 
-# Install Torch7, with LuaJIT support
-luarocks install torch WITH_LUA_JIT=1
-
-# Install extra Torch packages:
-luarocks install penlight
-luarocks install image
-luarocks install parallel
-luarocks install optim
+# Install Torch7, with LuaJIT support, and extra packages
+if [[ `uname` == 'Darwin' ]]; then
+    luarocks install torch WITH_LUA_JIT=1
+    luarocks install penlight
+    luarocks install image
+    luarocks install parallel
+    luarocks install optim
+elif [[ `uname` == 'Linux' ]]; then
+    sudo luarocks install torch WITH_LUA_JIT=1
+    sudo luarocks install penlight
+    sudo luarocks install image
+    sudo luarocks install parallel
+    sudo luarocks install optim
+fi
 
 # Done.
 echo "==> Torch7 has been installed successfully"
