@@ -28,16 +28,17 @@ versions. This is the recommended method to deploy Torch,
 torch-pkg is being deprecated.
 
 Notes:
-   LuaRocks v 2.0.10 is required to support our GIT-based packages.
-   On Linux, Aptitude lags behind, and provides much older versions
-   of LuaRocks. In this script, we build LuaRocks ourselves.
+LuaRocks v 2.0.10 is required to support our GIT-based packages.
+On Linux, Aptitude lags behind, and provides much older versions
+of LuaRocks. In this script, we build LuaRocks ourselves.
 
-   We overwrite ~/.luarocks/config.lua, to setup a link to our
-   rock server.
+We overwrite ~/.luarocks/config.lua, to setup a link to our
+rock server.
 
-   Once this script has been run once, you should be able to run
-   extra luarocks commands, and in particular install new packages:
-   $ luarocks install json
-   $ torch
-   > require 'json'
+Once this script has been run once, you should be able to run
+extra luarocks commands, and in particular install new packages:
+
+    $ luarocks install json
+    $ torch
+    > require 'json'
 
