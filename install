@@ -64,6 +64,7 @@ elif [[ `uname` == 'Linux' ]]; then
     sudo apt-get install -y libqt4-core libqt4-gui libqt4-dev
     sudo apt-get install -y libjpeg-dev
     sudo apt-get install -y libpng-dev
+    sudo apt-get install -y ncurses-dev
     sudo apt-get install -y imagemagick
     sudo apt-get install -y libzmq-dev
     sudo apt-get install -y gfortran
