@@ -42,7 +42,16 @@ if [[ `uname` == 'Darwin' ]]; then
     # Install dependencies:
     brew install git readline cmake wget qt
     brew install libjpeg imagemagick zeromq 
-    brew install luarocks
+    brew install lua
+
+    # Install bleeding edge Luarocks (previous versions have issues)
+    brew uninstall luarocks
+    cd /tmp
+    git clone git://github.com/keplerproject/luarocks.git
+    cd luarocks
+    ./configure
+    make
+    make install
 
 elif [[ `uname` == 'Linux' ]]; then
     # Aptitude?
