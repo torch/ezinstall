@@ -1,0 +1,131 @@
+#!/usr/bin/env bash
+
+######################################################################
+# Luarocks-based Torch install
+#
+# This script makes a local install (note: on Linux, we assume
+# that dependencies are satisfied, as we can't run apt-get...)
+# 
+# This script installs Torch7, and a few extra packages
+# (penlight, optim, parallel, image).
+# 
+# The install is done via Luarocks, which enables package
+# versions. This is the recommended method to deploy Torch,
+# torch-pkg is being deprecated.
+#
+# Notes:
+#    LuaRocks v 2.0.10 is required to support our GIT-based packages.
+#    On Linux, Aptitude lags behind, and provides much older versions
+#    of LuaRocks. In this script, we build LuaRocks ourselves.
+#
+#    We overwrite ~/.luarocks/config.lua, to setup a link to our
+#    rock server.
+#
+#    Once this script has been run once, you should be able to run
+#    extra luarocks commands, and in particular install new packages:
+#    $ luarocks install json
+#    $ torch
+#    > require 'json'
+#
+######################################################################
+
+# INSTALL PREFIX:
+INSTALL_PREFIX=$HOME/local
+echo "Installing Torch into: $INSTALL_PREFIX"
+
+# Based on Platform:
+if [[ `uname` == 'Darwin' ]]; then
+    # GCC?
+    if [[ `which gcc` == '' ]]; then
+        echo "MacOS doesn't come with GCC: please install XCode and the command line tools."
+        exit
+    fi
+
+    # Install Homebrew (pkg manager):
+    if [[ `which brew` == '' ]]; then
+        ruby <(curl -fsSkL raw.github.com/mxcl/homebrew/go)
+    fi
+
+    # Install dependencies:
+    brew install git readline cmake wget qt
+    brew install libjpeg imagemagick zeromq 
+    brew install lua
+    brew link readline --force
+
+    # Install bleeding edge Luarocks (previous versions have issues)
+    brew uninstall luarocks
+    cd /tmp
+    git clone git://github.com/keplerproject/luarocks.git
+    cd luarocks
+    ./configure
+    make
+    make install
+
+elif [[ `uname` == 'Linux' ]]; then
+    # Aptitude?
+    if [[ `which apt-get` == '' ]]; then
+        echo '==> apt-get not found, platform not supported'
+        exit
+    fi
+
+    # Install Lua
+    cd /tmp
+    wget http://www.lua.org/ftp/lua-5.1.tar.gz
+    tar xvf lua-5.1.tar.gz
+    cd lua-5.1
+    make linux
+    make install INSTALL_TOP=$INSTALL_PREFIX
+    
+    # Install Luarocks
+    cd /tmp
+    wget http://luarocks.org/releases/luarocks-2.0.12.tar.gz
+    tar xvf luarocks-2.0.12.tar.gz
+    cd luarocks-2.0.12
+    ./configure --prefix=$INSTALL_PREFIX
+    make
+    make install
+
+else
+    # Unsupported
+    echo '==> platform not supported, aborting'
+    exit
+fi
+
+# Create custom config file for Luarocks
+mkdir -p ~/.luarocks
+echo "rocks_servers = {"                                          > ~/.luarocks/config.lua
+echo "   [[http://luarocks.org/repositories/rocks]],"            >> ~/.luarocks/config.lua
+echo "   [[http://data.neuflow.org/luarocks]],"                  >> ~/.luarocks/config.lua
+echo "}"                                                         >> ~/.luarocks/config.lua
+echo "rocks_trees = {"                                           >> ~/.luarocks/config.lua
+echo "   home..[[/.luarocks]],"                                  >> ~/.luarocks/config.lua
+echo "   [[/usr/local]]"                                         >> ~/.luarocks/config.lua
+echo "}"                                                         >> ~/.luarocks/config.lua
+
+# Install Torch7, with LuaJIT support, and extra packages
+if [[ `uname` == 'Darwin' ]]; then
+    luarocks install --tree=$INSTALL_PREFIX torch WITH_LUA_JIT=1
+    luarocks install --tree=$INSTALL_PREFIX penlight
+    luarocks install --tree=$INSTALL_PREFIX image
+    luarocks install --tree=$INSTALL_PREFIX parallel
+    luarocks install --tree=$INSTALL_PREFIX optim
+    luarocks install --tree=$INSTALL_PREFIX json
+elif [[ `uname` == 'Linux' ]]; then
+    $INSTALL_PREFIX/bin/luarocks --tree=$INSTALL_PREFIX install torch WITH_LUA_JIT=1
+    $INSTALL_PREFIX/bin/luarocks --tree=$INSTALL_PREFIX install penlight
+    $INSTALL_PREFIX/bin/luarocks --tree=$INSTALL_PREFIX install image
+    $INSTALL_PREFIX/bin/luarocks --tree=$INSTALL_PREFIX install parallel
+    $INSTALL_PREFIX/bin/luarocks --tree=$INSTALL_PREFIX install optim
+    $INSTALL_PREFIX/bin/luarocks --tree=$INSTALL_PREFIX install json
+fi
+
+# Done.
+echo "==> Torch7 has been installed successfully"
+echo "  + Extra packages [image, parallel, optim, nnx] have been installed as well"
+echo "  + To install more packages, do:"
+echo "    $ luarocks search --all"
+echo "    $ luarocks install PKG_NAME"
+echo "  + Note: on MacOS, it's a good idea to install GCC 4.6 to enable OpenMP."
+echo "          You can do this by installing the GFortran bundles provided here:"
+echo "          http://gcc.gnu.org/wiki/GFortranBinaries"
+
