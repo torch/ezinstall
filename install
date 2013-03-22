@@ -42,7 +42,17 @@ if [[ `uname` == 'Darwin' ]]; then
     # Install dependencies:
     brew install git readline cmake wget qt
     brew install libjpeg imagemagick zeromq 
-    brew install luarocks
+    brew install lua
+    brew link readline --force
+
+    # Install bleeding edge Luarocks (previous versions have issues)
+    brew uninstall luarocks
+    cd /tmp
+    git clone git://github.com/keplerproject/luarocks.git
+    cd luarocks
+    ./configure
+    make
+    make install
 
 elif [[ `uname` == 'Linux' ]]; then
     # Aptitude?
@@ -119,12 +129,14 @@ if [[ `uname` == 'Darwin' ]]; then
     luarocks install image
     luarocks install parallel
     luarocks install optim
+    luarocks install json
 elif [[ `uname` == 'Linux' ]]; then
     sudo luarocks install torch WITH_LUA_JIT=1
     sudo luarocks install penlight
     sudo luarocks install image
     sudo luarocks install parallel
     sudo luarocks install optim
+    sudo luarocks install json
 fi
 
 # Done.
