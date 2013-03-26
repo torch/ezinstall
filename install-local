@@ -52,6 +52,7 @@ if [[ `uname` == 'Darwin' ]]; then
     # Install bleeding edge Luarocks (previous versions have issues)
     brew uninstall luarocks
     cd /tmp
+    rm -rf luarocks
     git clone git://github.com/keplerproject/luarocks.git
     cd luarocks
     mkdir -p $HOME/local
