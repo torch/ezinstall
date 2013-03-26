@@ -102,12 +102,12 @@ if [[ `uname` == 'Darwin' ]]; then
     $PREFIX/bin/luarocks install optim
     $PREFIX/bin/luarocks install json
 elif [[ `uname` == 'Linux' ]]; then
-    $PREFIX/bin/luarocks --tree=$PREFIX install torch WITH_LUA_JIT=1
-    $PREFIX/bin/luarocks --tree=$PREFIX install penlight
-    $PREFIX/bin/luarocks --tree=$PREFIX install image
-    $PREFIX/bin/luarocks --tree=$PREFIX install parallel
-    $PREFIX/bin/luarocks --tree=$PREFIX install optim
-    $PREFIX/bin/luarocks --tree=$PREFIX install json
+    $PREFIX/bin/luarocks install torch WITH_LUA_JIT=1
+    $PREFIX/bin/luarocks install penlight
+    $PREFIX/bin/luarocks install image
+    $PREFIX/bin/luarocks install parallel
+    $PREFIX/bin/luarocks install optim
+    $PREFIX/bin/luarocks install json
 fi
 
 # Done.
