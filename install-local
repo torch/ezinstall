@@ -54,7 +54,8 @@ if [[ `uname` == 'Darwin' ]]; then
     cd /tmp
     git clone git://github.com/keplerproject/luarocks.git
     cd luarocks
-    ./configure
+    mkdir -p $HOME/local
+    ./configure --prefix=$HOME/local --rocks-tree=$HOME/local
     make
     make install
 
@@ -83,14 +84,13 @@ else
 fi
 
 # Create custom config file for Luarocks
-mkdir -p ~/.luarocks
+mkdir -p $HOME/.luarocks
 echo "rocks_servers = {"                                          > ~/.luarocks/config.lua
 echo "   [[http://luarocks.org/repositories/rocks]],"            >> ~/.luarocks/config.lua
 echo "   [[http://data.neuflow.org/luarocks]],"                  >> ~/.luarocks/config.lua
 echo "}"                                                         >> ~/.luarocks/config.lua
 echo "rocks_trees = {"                                           >> ~/.luarocks/config.lua
-echo "   home..[[/.luarocks]],"                                  >> ~/.luarocks/config.lua
-echo "   [[/usr/local]]"                                         >> ~/.luarocks/config.lua
+echo "   home..[[/local]],"                                      >> ~/.luarocks/config.lua
 echo "}"                                                         >> ~/.luarocks/config.lua
 
 # Install Torch7, with LuaJIT support, and extra packages
