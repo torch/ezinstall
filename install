@@ -87,6 +87,7 @@ elif [[ `uname` == 'Linux' ]]; then
     cd OpenBLAS
     make NO_AFFINITY=1 USE_OPENMP=1
     sudo make install
+    export CMAKE_LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu:/usr/lib/gcc/x86_64-linux-gnu/4.6
 
     # Install Lua
     cd /tmp
@@ -131,12 +132,12 @@ if [[ `uname` == 'Darwin' ]]; then
     luarocks install optim
     luarocks install json
 elif [[ `uname` == 'Linux' ]]; then
-    sudo luarocks install torch WITH_LUA_JIT=1
-    sudo luarocks install penlight
-    sudo luarocks install image
-    sudo luarocks install parallel
-    sudo luarocks install optim
-    sudo luarocks install json
+    sudo -E luarocks install torch WITH_LUA_JIT=1
+    sudo -E luarocks install penlight
+    sudo -E luarocks install image
+    sudo -E luarocks install parallel
+    sudo -E luarocks install optim
+    sudo -E luarocks install json
 fi
 
 # Done.
