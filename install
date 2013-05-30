@@ -78,6 +78,7 @@ elif [[ `uname` == 'Linux' ]]; then
     sudo apt-get install -y imagemagick
     sudo apt-get install -y libzmq-dev
     sudo apt-get install -y gfortran
+    sudo apt-get install -y unzip
     sudo add-apt-repository ppa:chris-lea/zeromq
     sudo apt-get update
 
