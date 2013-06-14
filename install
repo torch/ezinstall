@@ -86,7 +86,7 @@ elif [[ `uname` == 'Linux' ]]; then
     cd /tmp/
     git clone git://github.com/xianyi/OpenBLAS.git
     cd OpenBLAS
-    make
+    make NO_AFFINITY=1 USE_OPENMP=1
     sudo make install
     export CMAKE_LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu:/usr/lib/gcc/x86_64-linux-gnu/4.6
 
