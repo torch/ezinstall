@@ -95,21 +95,12 @@ echo "   home..[[/local]],"                                      >> ~/.luarocks/
 echo "}"                                                         >> ~/.luarocks/config.lua
 
 # Install Torch7, with LuaJIT support, and extra packages
-if [[ `uname` == 'Darwin' ]]; then
-    $PREFIX/bin/luarocks install torch WITH_LUA_JIT=1
-    $PREFIX/bin/luarocks install penlight
-    $PREFIX/bin/luarocks install image
-    $PREFIX/bin/luarocks install parallel
-    $PREFIX/bin/luarocks install optim
-    $PREFIX/bin/luarocks install json
-elif [[ `uname` == 'Linux' ]]; then
-    $PREFIX/bin/luarocks install torch WITH_LUA_JIT=1
-    $PREFIX/bin/luarocks install penlight
-    $PREFIX/bin/luarocks install image
-    $PREFIX/bin/luarocks install parallel
-    $PREFIX/bin/luarocks install optim
-    $PREFIX/bin/luarocks install json
-fi
+$PREFIX/bin/luarocks install torch WITH_LUA_JIT=1
+$PREFIX/bin/luarocks install penlight
+$PREFIX/bin/luarocks install image
+$PREFIX/bin/luarocks install parallel
+$PREFIX/bin/luarocks install optim
+$PREFIX/bin/luarocks install json
 
 # Done.
 echo "==> Torch7 has been installed successfully"
