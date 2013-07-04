@@ -32,6 +32,7 @@ cd /tmp
 git clone https://github.com/andresy/torch
 cd torch
 mkdir build; cd build
+git checkout master; git pull
 rm -f CMakeCache.txt
 cmake .. -DWITH_ROCKS=1 -DCMAKE_INSTALL_PREFIX=$PREFIX -DWITH_CUDA=0
 make
