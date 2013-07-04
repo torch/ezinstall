@@ -8,8 +8,5 @@
 # Install dependencies
 curl -s https://raw.github.com/clementfarabet/torchinstall/master/install-deps | bash
 
-# Default path
-export PREFIX=/usr/local
-
 # Install Torch7
 curl -s https://raw.github.com/clementfarabet/torchinstall/master/install-torch | bash
