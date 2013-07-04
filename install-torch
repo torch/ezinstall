@@ -46,8 +46,10 @@ $PREFIX/bin/torch-rocks install json      ||  sudo $PREFIX/bin/torch-rocks insta
 $PREFIX/bin/torch-rocks install lua-cjson ||  sudo $PREFIX/bin/torch-rocks install lua-cjson
 
 # Done.
+echo ""
 echo "==> Torch7 has been installed successfully"
-echo "  + Extra packages [penlight, image, parallel, optim, json] have been installed as well:"
+echo ""
+echo "  + Extra packages have been installed as well:"
 echo "     $ torch-rocks list"
 echo ""
 echo "  + To install more packages, do:"
