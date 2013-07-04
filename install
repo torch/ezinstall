@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ######################################################################
-# Luarocks-based Torch install
+# Torch install
 #
 # This script installs Torch7, and a few extra packages
 # (penlight, optim, parallel, image).
@@ -10,17 +10,9 @@
 # versions. This is the recommended method to deploy Torch,
 # torch-pkg is being deprecated.
 #
-# Notes:
-#    LuaRocks v 2.0.10 is required to support our GIT-based packages.
-#    On Linux, Aptitude lags behind, and provides much older versions
-#    of LuaRocks. In this script, we build LuaRocks ourselves.
-#
-#    We overwrite ~/.luarocks/config.lua, to setup a link to our
-#    rock server.
-#
 #    Once this script has been run once, you should be able to run
-#    extra luarocks commands, and in particular install new packages:
-#    $ luarocks install json
+#    extra torch-rocks commands, and in particular install new packages:
+#    $ torch-rocks install json
 #    $ torch
 #    > require 'json'
 #
@@ -44,15 +36,6 @@ if [[ `uname` == 'Darwin' ]]; then
     brew install libjpeg imagemagick zeromq 
     brew install lua
     brew link readline --force
-
-    # Install bleeding edge Luarocks (previous versions have issues)
-    brew uninstall luarocks
-    cd /tmp
-    git clone git://github.com/keplerproject/luarocks.git
-    cd luarocks
-    ./configure
-    make
-    make install
 
 elif [[ `uname` == 'Linux' ]]; then
     # Aptitude?
@@ -90,63 +73,46 @@ elif [[ `uname` == 'Linux' ]]; then
     sudo make install
     export CMAKE_LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu:/usr/lib/gcc/x86_64-linux-gnu/4.6
 
-    # Install Lua
-    cd /tmp
-    wget http://www.lua.org/ftp/lua-5.1.tar.gz
-    tar xvf lua-5.1.tar.gz
-    cd lua-5.1
-    make linux
-    sudo make install
-    
-    # Install Luarocks
-    cd /tmp
-    wget http://luarocks.org/releases/luarocks-2.0.12.tar.gz
-    tar xvf luarocks-2.0.12.tar.gz
-    cd luarocks-2.0.12
-    ./configure
-    make
-    sudo make install
-
 else
     # Unsupported
     echo '==> platform not supported, aborting'
     exit
 fi
 
-# Create custom config file for Luarocks
-mkdir -p ~/.luarocks
-echo "rocks_servers = {"                                          > ~/.luarocks/config.lua
-echo "   [[http://luarocks.org/repositories/rocks]],"            >> ~/.luarocks/config.lua
-echo "   [[http://data.neuflow.org/luarocks]],"                  >> ~/.luarocks/config.lua
-echo "}"                                                         >> ~/.luarocks/config.lua
-echo "rocks_trees = {"                                           >> ~/.luarocks/config.lua
-echo "   home..[[/.luarocks]],"                                  >> ~/.luarocks/config.lua
-echo "   [[/usr/local]]"                                         >> ~/.luarocks/config.lua
-echo "}"                                                         >> ~/.luarocks/config.lua
+# Build Torch7
+cd /tmp
+git clone https://github.com/andresy/torch
+cd torch
+mkdir build; cd build
+cmake .. -DWITH_ROCKS=1
+make
 
-# Install Torch7, with LuaJIT support, and extra packages
+# Install Torch7 plus other basic packages
 if [[ `uname` == 'Darwin' ]]; then
-    luarocks install torch WITH_LUA_JIT=1
-    luarocks install penlight
-    luarocks install image
-    luarocks install parallel
-    luarocks install optim
-    luarocks install json
+    make install
+    torch-rocks install penlight
+    torch-rocks install image
+    torch-rocks install parallel
+    torch-rocks install optim
+    torch-rocks install json
 elif [[ `uname` == 'Linux' ]]; then
-    sudo -E luarocks install torch WITH_LUA_JIT=1
-    sudo -E luarocks install penlight
-    sudo -E luarocks install image
-    sudo -E luarocks install parallel
-    sudo -E luarocks install optim
-    sudo -E luarocks install json
+    sudo make install
+    sudo -E torch-rocks install penlight
+    sudo -E torch-rocks install image
+    sudo -E torch-rocks install parallel
+    sudo -E torch-rocks install optim
+    sudo -E torch-rocks install json
 fi
 
 # Done.
 echo "==> Torch7 has been installed successfully"
-echo "  + Extra packages [image, parallel, optim, nnx] have been installed as well"
+echo "  + Extra packages [penlight, image, parallel, optim, json] have been installed as well:"
+echo "     $ torch-rocks list"
+echo ""
 echo "  + To install more packages, do:"
-echo "    $ luarocks search --all"
-echo "    $ luarocks install PKG_NAME"
+echo "     $ torch-rocks search --all"
+echo "     $ torch-rocks install PKG_NAME"
+echo ""
 echo "  + Note: on MacOS, it's a good idea to install GCC 4.6 to enable OpenMP."
 echo "          You can do this by installing the GFortran bundles provided here:"
 echo "          http://gcc.gnu.org/wiki/GFortranBinaries"
