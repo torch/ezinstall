@@ -39,7 +39,10 @@ make
 make install || sudo make install
 
 # Install Torch7, with LuaJIT support, and extra packages
+$PREFIX/bin/torch-rocks install luafilesystem ||  sudo $PREFIX/bin/torch-rocks install luafilesystem
 $PREFIX/bin/torch-rocks install penlight  ||  sudo $PREFIX/bin/torch-rocks install penlight
+$PREFIX/bin/torch-rocks install sys       ||  sudo $PREFIX/bin/torch-rocks install sys
+$PREFIX/bin/torch-rocks install xlua      ||  sudo $PREFIX/bin/torch-rocks install xlua
 $PREFIX/bin/torch-rocks install image     ||  sudo $PREFIX/bin/torch-rocks install image
 $PREFIX/bin/torch-rocks install optim     ||  sudo $PREFIX/bin/torch-rocks install optim
 $PREFIX/bin/torch-rocks install json      ||  sudo $PREFIX/bin/torch-rocks install json
