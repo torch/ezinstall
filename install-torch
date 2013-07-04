@@ -6,9 +6,6 @@
 # This script installs Torch7, and a few extra packages
 # (penlight, optim, parallel, image).
 # 
-# WARNING: This install doesn't install any dependency, and assumes
-# that these are all met... Please see install, for full deps install.
-# 
 # The install is done via Luarocks, which enables package
 # versions. This is the recommended method to deploy Torch,
 # torch-pkg is being deprecated.
@@ -24,6 +21,11 @@
 # Prefix:
 PREFIX=$HOME/local
 echo "Installing Torch into: $PREFIX"
+
+# On Linux, export Gfortran's path (this does something only if OpenBLAS is found)
+if [[ `uname` == 'Linux' ]]; then
+    export CMAKE_LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu:/usr/lib/gcc/x86_64-linux-gnu/4.6:$CMAKE_LIBRARY_PATH
+fi
 
 # Build and install Torch7
 cd /tmp
