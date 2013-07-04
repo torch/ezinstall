@@ -14,31 +14,26 @@ Once installed, you should be able to run Torch with basic libraries:
 This script has been tested on MacOS X 10.8, and Ubuntu 12.04. It should work on earlier 
 Ubuntus and MacOS Xs, but other platforms are not supported.
 
-On Ubuntu you'll need 'sudo' privileges. If that doesn't work for you, then just grab the
-script, and modify it so that it installs Torch locally.
+On Ubuntu you'll need 'sudo' privileges, as the default install is global, 
+and the script needs to install dependencies.
 
-More info
----------
+If you've already installed the dependencies, and don't have root privileges, you 
+can use this command by itself:
 
-This script installs Torch7, and a few extra packages
-(penlight, optim, parallel, image).
+    curl -s https://raw.github.com/clementfarabet/torchinstall/master/install | bash
 
-The install is done via Luarocks, which enables package
-versions. This is the recommended method to deploy Torch,
-torch-pkg is being deprecated.
+By default, it will install Torch in $HOME/local/ , you can also override the
+default path by doing:
 
-Notes:
-LuaRocks v 2.0.10 is required to support our GIT-based packages.
-On Linux, Aptitude lags behind, and provides much older versions
-of LuaRocks. In this script, we build LuaRocks ourselves.
+    PREFIX=/my/path curl -s https://raw.github.com/clementfarabet/torchinstall/master/install | bash
 
-We overwrite ~/.luarocks/config.lua, to setup a link to our
-rock server.
+Torch7 now ships wih Luarocks, bundlde into an executable called torch-rocks.
+You can install new packages like this:
 
-Once this script has been run once, you should be able to run
-extra luarocks commands, and in particular install new packages:
+    torch-rocks search lua-cjson
+    torch-rocks install lua-cjson
 
-    $ luarocks install json
-    $ torch
-    > require 'json'
-
+By default, torch-rocks includes a link to our own Rocks repository, hosted
+[here](https://github.com/andresy/torch-rocks). If you wish to publish your 
+packages as rocks for Torch, simply clone this repo, add your rocks, and
+make a pull request on Github!
