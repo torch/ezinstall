@@ -39,12 +39,12 @@ make
 make install || sudo make install
 
 # Install Torch7, with LuaJIT support, and extra packages
-$PREFIX/bin/torch-rocks install penlight  ||  $PREFIX/bin/torch-rocks install penlight
-$PREFIX/bin/torch-rocks install image     ||  $PREFIX/bin/torch-rocks install image
-$PREFIX/bin/torch-rocks install parallel  ||  $PREFIX/bin/torch-rocks install parallel
-$PREFIX/bin/torch-rocks install optim     ||  $PREFIX/bin/torch-rocks install optim
-$PREFIX/bin/torch-rocks install json      ||  $PREFIX/bin/torch-rocks install json
-$PREFIX/bin/torch-rocks install lua-cjson ||  $PREFIX/bin/torch-rocks install lua-cjson
+$PREFIX/bin/torch-rocks install penlight  ||  sudo $PREFIX/bin/torch-rocks install penlight
+$PREFIX/bin/torch-rocks install image     ||  sudo $PREFIX/bin/torch-rocks install image
+$PREFIX/bin/torch-rocks install parallel  ||  sudo $PREFIX/bin/torch-rocks install parallel
+$PREFIX/bin/torch-rocks install optim     ||  sudo $PREFIX/bin/torch-rocks install optim
+$PREFIX/bin/torch-rocks install json      ||  sudo $PREFIX/bin/torch-rocks install json
+$PREFIX/bin/torch-rocks install lua-cjson ||  sudo $PREFIX/bin/torch-rocks install lua-cjson
 
 # Done.
 echo "==> Torch7 has been installed successfully"
