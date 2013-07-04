@@ -19,7 +19,7 @@
 ######################################################################
 
 # Prefix:
-PREFIX=$HOME/local
+PREFIX=${PREFIX-$HOME/local}
 echo "Installing Torch into: $PREFIX"
 
 # On Linux, export Gfortran's path (this does something only if OpenBLAS is found)
