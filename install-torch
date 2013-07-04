@@ -32,7 +32,8 @@ cd /tmp
 git clone https://github.com/andresy/torch
 cd torch
 mkdir build; cd build
-cmake .. -DWITH_ROCKS=1 -DCMAKE_INSTALL_PREFIX=$PREFIX
+rm -f CMakeCache.txt
+cmake .. -DWITH_ROCKS=1 -DCMAKE_INSTALL_PREFIX=$PREFIX -DWITH_LUA_PACKAGE_PATH=1
 make
 make install || sudo make install
 
