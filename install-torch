@@ -33,7 +33,7 @@ git clone https://github.com/andresy/torch
 cd torch
 mkdir build; cd build
 rm -f CMakeCache.txt
-cmake .. -DWITH_ROCKS=1 -DCMAKE_INSTALL_PREFIX=$PREFIX -DWITH_LUA_PACKAGE_PATH=1
+cmake .. -DWITH_ROCKS=1 -DCMAKE_INSTALL_PREFIX=$PREFIX
 make
 make install || sudo make install
 
