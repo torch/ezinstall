@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+######################################################################
+# Torch install
+#
+# This script installs Torch7, and a few extra packages
+# (penlight, optim, parallel, image).
+# 
+# The install is done via Luarocks, which enables package
+# versions. This is the recommended method to deploy Torch,
+# torch-pkg is being deprecated.
+#
+#    Once this script has been run once, you should be able to run
+#    extra torch-rocks commands, and in particular install new packages:
+#    $ torch-rocks install json
+#    $ torch
+#    > require 'json'
+#
+######################################################################
+
+# Prefix:
+PREFIX=${PREFIX-/usr/local}
+echo "Installing Torch into: $PREFIX"
+
+# On Linux, export Gfortran's path (this does something only if OpenBLAS is found)
+if [[ `uname` == 'Linux' ]]; then
+    export CMAKE_LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu:/usr/lib/gcc/x86_64-linux-gnu/4.6:$CMAKE_LIBRARY_PATH
+fi
+
+# Build and install Torch7
+cd /tmp
+git clone https://github.com/andresy/torch
+cd torch
+mkdir build; cd build
+cmake .. -DWITH_ROCKS=1 -DCMAKE_INSTALL_PREFIX=$PREFIX -DWITH_QTLUA=0
+make
+make install || sudo make install
+
+# Install Torch7, with LuaJIT support, and extra packages
+$PREFIX/bin/torch-rocks install penlight  ||  $PREFIX/bin/torch-rocks install penlight
+$PREFIX/bin/torch-rocks install image     ||  $PREFIX/bin/torch-rocks install image
+$PREFIX/bin/torch-rocks install parallel  ||  $PREFIX/bin/torch-rocks install parallel
+$PREFIX/bin/torch-rocks install optim     ||  $PREFIX/bin/torch-rocks install optim
+$PREFIX/bin/torch-rocks install json      ||  $PREFIX/bin/torch-rocks install json
+
+# Done.
+echo "==> Torch7 has been installed successfully"
+echo "  + Extra packages [penlight, image, parallel, optim, json] have been installed as well:"
+echo "     $ torch-rocks list"
+echo ""
+echo "  + To install more packages, do:"
+echo "     $ torch-rocks search --all"
+echo "     $ torch-rocks install PKG_NAME"
+echo ""
+echo "  + Note: on MacOS, it's a good idea to install GCC 4.6 to enable OpenMP."
+echo "          You can do this by installing the GFortran bundles provided here:"
+echo "          http://gcc.gnu.org/wiki/GFortranBinaries"

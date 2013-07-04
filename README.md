@@ -25,8 +25,7 @@ can use this command to just install Torch:
 By default, it will install Torch in $HOME/local/ , you can also override the
 default path by doing:
 
-    export PREFIX=/my/path;
-    curl -s https://raw.github.com/clementfarabet/torchinstall/master/install-torch | bash
+    curl -s https://raw.github.com/clementfarabet/torchinstall/master/install-torch | PREFIX=/my/path bash
 
 Torch7 now ships wih Luarocks, bundlde into an executable called torch-rocks.
 You can install new packages like this:
