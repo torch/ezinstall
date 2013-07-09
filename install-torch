@@ -47,6 +47,7 @@ $PREFIX/bin/torch-rocks install image     ||  sudo $PREFIX/bin/torch-rocks insta
 $PREFIX/bin/torch-rocks install optim     ||  sudo $PREFIX/bin/torch-rocks install optim
 $PREFIX/bin/torch-rocks install json      ||  sudo $PREFIX/bin/torch-rocks install json
 $PREFIX/bin/torch-rocks install lua-cjson ||  sudo $PREFIX/bin/torch-rocks install lua-cjson
+$PREFIX/bin/torch-rocks install trepl     ||  sudo $PREFIX/bin/torch-rocks install trepl
 
 # Done.
 echo ""
