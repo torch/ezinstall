@@ -37,3 +37,17 @@ By default, torch-rocks includes a link to our own Rocks repository, hosted
 [here](https://github.com/andresy/torch-rocks). If you wish to publish your 
 packages as rocks for Torch, simply clone this repo, add your rocks, and
 make a pull request on Github!
+
+## Updating from a previous version
+Note that if you are coming from a previous version you are advise to clean up the old installation
+with the following commands
+
+```
+rm -rf ~/.luarocks
+rm -rf /usr/local/lib/luarocks/
+rm -rf /usr/local/lib/lua/
+rm -rf /usr/local/share/torch/
+rm -rf /usr/local/share/lua/
+rm -rf /usr/local/lua/
+rm -rf /usr/local/etc/luarocks/
+```
