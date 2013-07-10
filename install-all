@@ -6,7 +6,7 @@
 ######################################################################
 
 # Install dependencies
-curl -s https://raw.github.com/clementfarabet/torchinstall/master/install-deps | bash
+curl -s https://raw.github.com/torch/ezinstall/master/install-deps | bash
 
 # Install Torch7
-curl -s https://raw.github.com/clementfarabet/torchinstall/master/install-torch | bash
+curl -s https://raw.github.com/torch/ezinstall/master/install-torch | bash
