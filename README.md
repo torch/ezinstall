@@ -20,7 +20,7 @@ and the script needs to install dependencies.
 If you've already installed the dependencies, and don't have root privileges, you 
 can use this command to just install Torch:
 
-    curl -s https://raw.github.com/troch/ezinstall/master/install-torch | bash
+    curl -s https://raw.github.com/torch/ezinstall/master/install-torch | bash
 
 By default, it will install Torch in /usr/local/ , you can override this
 default path by doing:
