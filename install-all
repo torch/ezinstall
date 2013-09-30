@@ -8,5 +8,11 @@
 # Install dependencies
 curl -s https://raw.github.com/torch/ezinstall/master/install-deps | bash
 
-# Install Torch7
-curl -s https://raw.github.com/torch/ezinstall/master/install-torch | bash
+#check if nvcc or gcc are available. If they are, install-torch, if not install-torch-nocuda
+if ! gcc_loc="$(type -p "gcc")" || [ -z "$gcc_loc" ] || ! nvcc_loc="$(type -p "nvcc")" || [ -z "$nvcc_loc" ] ; then
+    # if either of gcc or nvcc are not found, install without cuda
+    curl -s https://raw.github.com/torch/ezinstall/master/install-torch-nocuda | bash
+else
+    # if gcc and nvcc are found, regular script
+    curl -s https://raw.github.com/torch/ezinstall/master/install-torch | bash
+fi
