@@ -29,7 +29,7 @@ fi
 
 # Build and install Torch7
 cd /tmp
-git clone https://github.com/torch/torch7-nodistro torch7
+git clone https://github.com/torch/torch7-distro torch7
 cd torch7
 mkdir build; cd build
 git checkout master; git pull
