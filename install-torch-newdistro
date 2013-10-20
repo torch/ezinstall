@@ -59,26 +59,24 @@ cjson=ok
 trepl=ok
 
 # Install base packages:
-$PREFIX/bin/torch-rocks install https://raw.github.com/andresy/sundown-ffi/master/rocks/sundown-scm-1.rockspec                   ||   sudo $PREFIX/bin/torch-rocks install https://raw.github.com/andresy/sundown-ffi/master/rocks/sundown-scm-1.rockspec                 ||   sundown=failed
-$PREFIX/bin/torch-rocks install https://raw.github.com/andresy/torch7-split/master/rocks/cwrap/rocks/cwrap-scm-1.rockspec        ||   sudo $PREFIX/bin/torch-rocks install https://raw.github.com/andresy/torch7-split/master/rocks/cwrap/rocks/cwrap-scm-1.rockspec      ||   cwrap=failed
-$PREFIX/bin/torch-rocks install https://raw.github.com/andresy/torch7-split/master/rocks/paths/rocks/paths-scm-1.rockspec        ||   sudo $PREFIX/bin/torch-rocks install https://raw.github.com/andresy/torch7-split/master/rocks/paths/rocks/paths-scm-1.rockspec      ||   paths=failed
-$PREFIX/bin/torch-rocks install https://raw.github.com/andresy/torch7-split/master/rocks/torch/rocks/torch-scm-1.rockspec        ||   sudo $PREFIX/bin/torch-rocks install https://raw.github.com/andresy/torch7-split/master/rocks/torch/rocks/torch-scm-1.rockspec      ||   torch=failed
-$PREFIX/bin/torch-rocks install https://raw.github.com/andresy/torch7-split/master/rocks/nn/rocks/nn-scm-1.rockspec              ||   sudo $PREFIX/bin/torch-rocks install https://raw.github.com/andresy/torch7-split/master/rocks/nn/rocks/nn-scm-1.rockspec            ||   nn=failed
-$PREFIX/bin/torch-rocks install https://raw.github.com/andresy/torch7-split/master/rocks/dok/rocks/dok-scm-1.rockspec            ||   sudo $PREFIX/bin/torch-rocks install https://raw.github.com/andresy/torch7-split/master/rocks/dok/rocks/dok-scm-1.rockspec          ||   dok=failed
-$PREFIX/bin/torch-rocks install https://raw.github.com/andresy/torch7-split/master/rocks/gnuplot/rocks/gnuplot-scm-1.rockspec    ||   sudo $PREFIX/bin/torch-rocks install https://raw.github.com/andresy/torch7-split/master/rocks/gnuplot/rocks/gnuplot-scm-1.rockspec  ||   gnuplot=failed
-$PREFIX/bin/torch-rocks install https://raw.github.com/andresy/torch7-split/master/rocks/cutorch/rocks/cutorch-scm-1.rockspec    ||   sudo $PREFIX/bin/torch-rocks install https://raw.github.com/andresy/torch7-split/master/rocks/cutorch/rocks/cutorch-scm-1.rockspec  ||   cutorch=failed   
-$PREFIX/bin/torch-rocks install https://raw.github.com/andresy/torch7-split/master/rocks/cunn/rocks/cunn-scm-1.rockspec          ||   sudo $PREFIX/bin/torch-rocks install https://raw.github.com/andresy/torch7-split/master/rocks/cunn/rocks/cunn-scm-1.rockspec        ||   cunn=failed
-$PREFIX/bin/torch-rocks install https://raw.github.com/andresy/torch7-split/master/rocks/qttorch/rocks/qttorch-scm-1.rockspec    ||   sudo $PREFIX/torch-rocks install https://raw.github.com/andresy/torch7-split/master/rocks/qttorch/rocks/qttorch-scm-1.rockspec      ||   qttorch=failed
-
-# Install extra packages
-$PREFIX/bin/torch-rocks install luafilesystem ||  sudo $PREFIX/bin/torch-rocks install luafilesystem  ||  lfs=failed
-$PREFIX/bin/torch-rocks install penlight      ||  sudo $PREFIX/bin/torch-rocks install penlight       ||  penlight=failed
-$PREFIX/bin/torch-rocks install sys           ||  sudo $PREFIX/bin/torch-rocks install sys            ||  sys=failed
-$PREFIX/bin/torch-rocks install xlua          ||  sudo $PREFIX/bin/torch-rocks install xlua           ||  xlua=failed
-$PREFIX/bin/torch-rocks install image         ||  sudo $PREFIX/bin/torch-rocks install image          ||  image=failed
-$PREFIX/bin/torch-rocks install optim         ||  sudo $PREFIX/bin/torch-rocks install optim          ||  optim=failed
-$PREFIX/bin/torch-rocks install lua-cjson     ||  sudo $PREFIX/bin/torch-rocks install lua-cjson      ||  cjson=failed
-$PREFIX/bin/torch-rocks install trepl         ||  sudo $PREFIX/bin/torch-rocks install trepl          ||  trepl=failed
+$PREFIX/bin/torch-rocks install sundown       ||  sudo $PREFIX/bin/torch-rocks install sundown        ||   sundown=failed
+$PREFIX/bin/torch-rocks install cwrap         ||  sudo $PREFIX/bin/torch-rocks install cwrap          ||   cwrap=failed
+$PREFIX/bin/torch-rocks install paths         ||  sudo $PREFIX/bin/torch-rocks install paths          ||   paths=failed
+$PREFIX/bin/torch-rocks install torch         ||  sudo $PREFIX/bin/torch-rocks install torch          ||   torch=failed
+$PREFIX/bin/torch-rocks install nn            ||  sudo $PREFIX/bin/torch-rocks install nn             ||   nn=failed
+$PREFIX/bin/torch-rocks install dok           ||  sudo $PREFIX/bin/torch-rocks install dok            ||   dok=failed
+$PREFIX/bin/torch-rocks install gnuplot       ||  sudo $PREFIX/bin/torch-rocks install gnuplot        ||   gnuplot=failed
+$PREFIX/bin/torch-rocks install cutorch       ||  sudo $PREFIX/bin/torch-rocks install cutorch        ||   cutorch=failed   
+$PREFIX/bin/torch-rocks install cunn          ||  sudo $PREFIX/bin/torch-rocks install cunn           ||   cunn=failed
+$PREFIX/bin/torch-rocks install qttorch       ||  sudo $PREFIX/bin/torch-rocks install qttorch        ||   qttorch=failed
+$PREFIX/bin/torch-rocks install luafilesystem ||  sudo $PREFIX/bin/torch-rocks install luafilesystem  ||   lfs=failed
+$PREFIX/bin/torch-rocks install penlight      ||  sudo $PREFIX/bin/torch-rocks install penlight       ||   penlight=failed
+$PREFIX/bin/torch-rocks install sys           ||  sudo $PREFIX/bin/torch-rocks install sys            ||   sys=failed
+$PREFIX/bin/torch-rocks install xlua          ||  sudo $PREFIX/bin/torch-rocks install xlua           ||   xlua=failed
+$PREFIX/bin/torch-rocks install image         ||  sudo $PREFIX/bin/torch-rocks install image          ||   image=failed
+$PREFIX/bin/torch-rocks install optim         ||  sudo $PREFIX/bin/torch-rocks install optim          ||   optim=failed
+$PREFIX/bin/torch-rocks install lua-cjson     ||  sudo $PREFIX/bin/torch-rocks install lua-cjson      ||   cjson=failed
+$PREFIX/bin/torch-rocks install trepl         ||  sudo $PREFIX/bin/torch-rocks install trepl          ||   trepl=failed
 
 # Done.
 echo ""
