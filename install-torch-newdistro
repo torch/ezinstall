@@ -11,8 +11,8 @@
 # torch-pkg is being deprecated.
 #
 #    Once this script has been run once, you should be able to run
-#    extra torch-rocks commands, and in particular install new packages:
-#    $ torch-rocks install json
+#    extra luarocks commands, and in particular install new packages:
+#    $ luarocks install json
 #    $ torch
 #    > require 'json'
 #
@@ -29,8 +29,8 @@ fi
 
 # Build and install Torch7
 cd /tmp
-git clone https://github.com/andresy/torch7-split torch7-split
-cd torch7-split
+git clone https://github.com/torch/luajit-rocks.git
+cd luajit-rocks
 mkdir build; cd build
 git checkout master; git pull
 rm -f CMakeCache.txt
@@ -59,35 +59,35 @@ cjson=ok
 trepl=ok
 
 # Install base packages:
-$PREFIX/bin/torch-rocks install sundown       ||  sudo $PREFIX/bin/torch-rocks install sundown        ||   sundown=failed
-$PREFIX/bin/torch-rocks install cwrap         ||  sudo $PREFIX/bin/torch-rocks install cwrap          ||   cwrap=failed
-$PREFIX/bin/torch-rocks install paths         ||  sudo $PREFIX/bin/torch-rocks install paths          ||   paths=failed
-$PREFIX/bin/torch-rocks install torch         ||  sudo $PREFIX/bin/torch-rocks install torch          ||   torch=failed
-$PREFIX/bin/torch-rocks install nn            ||  sudo $PREFIX/bin/torch-rocks install nn             ||   nn=failed
-$PREFIX/bin/torch-rocks install dok           ||  sudo $PREFIX/bin/torch-rocks install dok            ||   dok=failed
-$PREFIX/bin/torch-rocks install gnuplot       ||  sudo $PREFIX/bin/torch-rocks install gnuplot        ||   gnuplot=failed
-$PREFIX/bin/torch-rocks install cutorch       ||  sudo $PREFIX/bin/torch-rocks install cutorch        ||   cutorch=failed   
-$PREFIX/bin/torch-rocks install cunn          ||  sudo $PREFIX/bin/torch-rocks install cunn           ||   cunn=failed
-$PREFIX/bin/torch-rocks install qttorch       ||  sudo $PREFIX/bin/torch-rocks install qttorch        ||   qttorch=failed
-$PREFIX/bin/torch-rocks install luafilesystem ||  sudo $PREFIX/bin/torch-rocks install luafilesystem  ||   lfs=failed
-$PREFIX/bin/torch-rocks install penlight      ||  sudo $PREFIX/bin/torch-rocks install penlight       ||   penlight=failed
-$PREFIX/bin/torch-rocks install sys           ||  sudo $PREFIX/bin/torch-rocks install sys            ||   sys=failed
-$PREFIX/bin/torch-rocks install xlua          ||  sudo $PREFIX/bin/torch-rocks install xlua           ||   xlua=failed
-$PREFIX/bin/torch-rocks install image         ||  sudo $PREFIX/bin/torch-rocks install image          ||   image=failed
-$PREFIX/bin/torch-rocks install optim         ||  sudo $PREFIX/bin/torch-rocks install optim          ||   optim=failed
-$PREFIX/bin/torch-rocks install lua-cjson     ||  sudo $PREFIX/bin/torch-rocks install lua-cjson      ||   cjson=failed
-$PREFIX/bin/torch-rocks install trepl         ||  sudo $PREFIX/bin/torch-rocks install trepl          ||   trepl=failed
+$PREFIX/bin/luarocks install sundown       ||  sudo $PREFIX/bin/luarocks install sundown        ||   sundown=failed
+$PREFIX/bin/luarocks install cwrap         ||  sudo $PREFIX/bin/luarocks install cwrap          ||   cwrap=failed
+$PREFIX/bin/luarocks install paths         ||  sudo $PREFIX/bin/luarocks install paths          ||   paths=failed
+$PREFIX/bin/luarocks install torch         ||  sudo $PREFIX/bin/luarocks install torch          ||   torch=failed
+$PREFIX/bin/luarocks install nn            ||  sudo $PREFIX/bin/luarocks install nn             ||   nn=failed
+$PREFIX/bin/luarocks install dok           ||  sudo $PREFIX/bin/luarocks install dok            ||   dok=failed
+$PREFIX/bin/luarocks install gnuplot       ||  sudo $PREFIX/bin/luarocks install gnuplot        ||   gnuplot=failed
+$PREFIX/bin/luarocks install cutorch       ||  sudo $PREFIX/bin/luarocks install cutorch        ||   cutorch=failed   
+$PREFIX/bin/luarocks install cunn          ||  sudo $PREFIX/bin/luarocks install cunn           ||   cunn=failed
+$PREFIX/bin/luarocks install qttorch       ||  sudo $PREFIX/bin/luarocks install qttorch        ||   qttorch=failed
+$PREFIX/bin/luarocks install luafilesystem ||  sudo $PREFIX/bin/luarocks install luafilesystem  ||   lfs=failed
+$PREFIX/bin/luarocks install penlight      ||  sudo $PREFIX/bin/luarocks install penlight       ||   penlight=failed
+$PREFIX/bin/luarocks install sys           ||  sudo $PREFIX/bin/luarocks install sys            ||   sys=failed
+$PREFIX/bin/luarocks install xlua          ||  sudo $PREFIX/bin/luarocks install xlua           ||   xlua=failed
+$PREFIX/bin/luarocks install image         ||  sudo $PREFIX/bin/luarocks install image          ||   image=failed
+$PREFIX/bin/luarocks install optim         ||  sudo $PREFIX/bin/luarocks install optim          ||   optim=failed
+$PREFIX/bin/luarocks install lua-cjson     ||  sudo $PREFIX/bin/luarocks install lua-cjson      ||   cjson=failed
+$PREFIX/bin/luarocks install trepl         ||  sudo $PREFIX/bin/luarocks install trepl          ||   trepl=failed
 
 # Done.
 echo ""
 echo "=> Torch7 has been installed successfully"
 echo ""
 echo "  + Extra packages have been installed as well:"
-echo "     $ torch-rocks list"
+echo "     $ luarocks list"
 echo ""
 echo "  + To install more packages, do:"
-echo "     $ torch-rocks search --all"
-echo "     $ torch-rocks install PKG_NAME"
+echo "     $ luarocks search --all"
+echo "     $ luarocks install PKG_NAME"
 echo ""
 echo "  + Note: on MacOS, it's a good idea to install GCC 4.6 to enable OpenMP."
 echo "          You can do this by installing the GFortran bundles provided here:"
