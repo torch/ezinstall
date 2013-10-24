@@ -48,6 +48,7 @@ dok=ok
 gnuplot=ok
 cutorch=ok
 cunn=ok
+qtlua=ok
 qttorch=ok
 lfs=ok
 penlight=ok
@@ -68,6 +69,7 @@ $PREFIX/bin/luarocks install dok           ||  sudo $PREFIX/bin/luarocks install
 $PREFIX/bin/luarocks install gnuplot       ||  sudo $PREFIX/bin/luarocks install gnuplot        ||   gnuplot=failed
 $PREFIX/bin/luarocks install cutorch       ||  sudo $PREFIX/bin/luarocks install cutorch        ||   cutorch=failed   
 $PREFIX/bin/luarocks install cunn          ||  sudo $PREFIX/bin/luarocks install cunn           ||   cunn=failed
+$PREFIX/bin/luarocks install qtlua         ||  sudo $PREFIX/bin/luarocks install qtlua          ||   qtlua=failed
 $PREFIX/bin/luarocks install qttorch       ||  sudo $PREFIX/bin/luarocks install qttorch        ||   qttorch=failed
 $PREFIX/bin/luarocks install luafilesystem ||  sudo $PREFIX/bin/luarocks install luafilesystem  ||   lfs=failed
 $PREFIX/bin/luarocks install penlight      ||  sudo $PREFIX/bin/luarocks install penlight       ||   penlight=failed
@@ -103,6 +105,7 @@ echo "    - dok: " $dok
 echo "    - gnuplot: " $gnuplot
 echo "    - cutorch: " $cutorch
 echo "    - cunn: " $cunn
+echo "    - qtlua: " $qtlua
 echo "    - qttorch: " $qttorch
 echo "    - lfs: " $lfs
 echo "    - penlight: " $penlight
