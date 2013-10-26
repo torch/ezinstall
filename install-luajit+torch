@@ -36,7 +36,7 @@ git checkout master; git pull
 rm -f CMakeCache.txt
 cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX
 make
-make install || sudo make install
+make install || sudo -E make install
 
 # Statuses:
 sundown=ok
@@ -60,25 +60,25 @@ cjson=ok
 trepl=ok
 
 # Install base packages:
-$PREFIX/bin/luarocks install sundown       ||  sudo $PREFIX/bin/luarocks install sundown        ||   sundown=failed
-$PREFIX/bin/luarocks install cwrap         ||  sudo $PREFIX/bin/luarocks install cwrap          ||   cwrap=failed
-$PREFIX/bin/luarocks install paths         ||  sudo $PREFIX/bin/luarocks install paths          ||   paths=failed
-$PREFIX/bin/luarocks install torch         ||  sudo $PREFIX/bin/luarocks install torch          ||   torch=failed
-$PREFIX/bin/luarocks install nn            ||  sudo $PREFIX/bin/luarocks install nn             ||   nn=failed
-$PREFIX/bin/luarocks install dok           ||  sudo $PREFIX/bin/luarocks install dok            ||   dok=failed
-$PREFIX/bin/luarocks install gnuplot       ||  sudo $PREFIX/bin/luarocks install gnuplot        ||   gnuplot=failed
-$PREFIX/bin/luarocks install cutorch       ||  sudo $PREFIX/bin/luarocks install cutorch        ||   cutorch=failed   
-$PREFIX/bin/luarocks install cunn          ||  sudo $PREFIX/bin/luarocks install cunn           ||   cunn=failed
-$PREFIX/bin/luarocks install qtlua         ||  sudo $PREFIX/bin/luarocks install qtlua          ||   qtlua=failed
-$PREFIX/bin/luarocks install qttorch       ||  sudo $PREFIX/bin/luarocks install qttorch        ||   qttorch=failed
-$PREFIX/bin/luarocks install luafilesystem ||  sudo $PREFIX/bin/luarocks install luafilesystem  ||   lfs=failed
-$PREFIX/bin/luarocks install penlight      ||  sudo $PREFIX/bin/luarocks install penlight       ||   penlight=failed
-$PREFIX/bin/luarocks install sys           ||  sudo $PREFIX/bin/luarocks install sys            ||   sys=failed
-$PREFIX/bin/luarocks install xlua          ||  sudo $PREFIX/bin/luarocks install xlua           ||   xlua=failed
-$PREFIX/bin/luarocks install image         ||  sudo $PREFIX/bin/luarocks install image          ||   image=failed
-$PREFIX/bin/luarocks install optim         ||  sudo $PREFIX/bin/luarocks install optim          ||   optim=failed
-$PREFIX/bin/luarocks install lua-cjson     ||  sudo $PREFIX/bin/luarocks install lua-cjson      ||   cjson=failed
-$PREFIX/bin/luarocks install trepl         ||  sudo $PREFIX/bin/luarocks install trepl          ||   trepl=failed
+$PREFIX/bin/luarocks install sundown       ||  sudo -E $PREFIX/bin/luarocks install sundown        ||   sundown=failed
+$PREFIX/bin/luarocks install cwrap         ||  sudo -E $PREFIX/bin/luarocks install cwrap          ||   cwrap=failed
+$PREFIX/bin/luarocks install paths         ||  sudo -E $PREFIX/bin/luarocks install paths          ||   paths=failed
+$PREFIX/bin/luarocks install torch         ||  sudo -E $PREFIX/bin/luarocks install torch          ||   torch=failed
+$PREFIX/bin/luarocks install nn            ||  sudo -E $PREFIX/bin/luarocks install nn             ||   nn=failed
+$PREFIX/bin/luarocks install dok           ||  sudo -E $PREFIX/bin/luarocks install dok            ||   dok=failed
+$PREFIX/bin/luarocks install gnuplot       ||  sudo -E $PREFIX/bin/luarocks install gnuplot        ||   gnuplot=failed
+$PREFIX/bin/luarocks install cutorch       ||  sudo -E $PREFIX/bin/luarocks install cutorch        ||   cutorch=failed   
+$PREFIX/bin/luarocks install cunn          ||  sudo -E $PREFIX/bin/luarocks install cunn           ||   cunn=failed
+$PREFIX/bin/luarocks install qtlua         ||  sudo -E $PREFIX/bin/luarocks install qtlua          ||   qtlua=failed
+$PREFIX/bin/luarocks install qttorch       ||  sudo -E $PREFIX/bin/luarocks install qttorch        ||   qttorch=failed
+$PREFIX/bin/luarocks install luafilesystem ||  sudo -E $PREFIX/bin/luarocks install luafilesystem  ||   lfs=failed
+$PREFIX/bin/luarocks install penlight      ||  sudo -E $PREFIX/bin/luarocks install penlight       ||   penlight=failed
+$PREFIX/bin/luarocks install sys           ||  sudo -E $PREFIX/bin/luarocks install sys            ||   sys=failed
+$PREFIX/bin/luarocks install xlua          ||  sudo -E $PREFIX/bin/luarocks install xlua           ||   xlua=failed
+$PREFIX/bin/luarocks install image         ||  sudo -E $PREFIX/bin/luarocks install image          ||   image=failed
+$PREFIX/bin/luarocks install optim         ||  sudo -E $PREFIX/bin/luarocks install optim          ||   optim=failed
+$PREFIX/bin/luarocks install lua-cjson     ||  sudo -E $PREFIX/bin/luarocks install lua-cjson      ||   cjson=failed
+$PREFIX/bin/luarocks install trepl         ||  sudo -E $PREFIX/bin/luarocks install trepl          ||   trepl=failed
 
 # Done.
 echo ""
