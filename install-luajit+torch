@@ -96,23 +96,23 @@ echo "          You can do this by installing the GFortran bundles provided here
 echo "          http://gcc.gnu.org/wiki/GFortranBinaries"
 echo ""
 echo "  + packages installed:"
-echo "    - sundown: " $sundown
-echo "    - cwrap: " $cwrap
-echo "    - paths: " $paths
-echo "    - torch: " $torch
-echo "    - nn: " $nn
-echo "    - dok: " $dok
-echo "    - gnuplot: " $gnuplot
-echo "    - cutorch: " $cutorch
-echo "    - cunn: " $cunn
-echo "    - qtlua: " $qtlua
-echo "    - qttorch: " $qttorch
-echo "    - lfs: " $lfs
-echo "    - penlight: " $penlight
-echo "    - sys: " $sys
-echo "    - xlua: " $xlua
-echo "    - image: " $image
-echo "    - optim: " $optim
-echo "    - cjson: " $cjson
-echo "    - trepl: " $trepl
+echo "    - sundown   : " $sundown
+echo "    - cwrap     : " $cwrap
+echo "    - paths     : " $paths
+echo "    - torch     : " $torch
+echo "    - nn        : " $nn
+echo "    - dok       : " $dok
+echo "    - gnuplot   : " $gnuplot
+echo "    - cutorch   : " $cutorch
+echo "    - cunn      : " $cunn
+echo "    - qtlua     : " $qtlua
+echo "    - qttorch   : " $qttorch
+echo "    - lfs       : " $lfs
+echo "    - penlight  : " $penlight
+echo "    - sys       : " $sys
+echo "    - xlua      : " $xlua
+echo "    - image     : " $image
+echo "    - optim     : " $optim
+echo "    - cjson     : " $cjson
+echo "    - trepl     : " $trepl
 echo ""
