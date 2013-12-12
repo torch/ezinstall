@@ -37,6 +37,12 @@ rm -f CMakeCache.txt
 cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX
 make
 make install || sudo -E make install
+# check if we are on mac and fix RPATH for local install
+path_to_install_name_tool=$(which install_name_tool)
+if [ -x "$path_to_install_name_tool" ] 
+then
+   install_name_tool -id ${PREFIX}/lib/libluajit.dylib ${PREFIX}/lib/libluajit.dylib
+fi
 
 # Statuses:
 sundown=ok
@@ -46,8 +52,6 @@ torch=ok
 nn=ok
 dok=ok
 gnuplot=ok
-cutorch=ok
-cunn=ok
 qtlua=ok
 qttorch=ok
 lfs=ok
@@ -59,6 +63,13 @@ optim=ok
 cjson=ok
 trepl=ok
 
+path_to_nvcc=$(which nvcc)
+if [ -x "$path_to_nvcc" ]
+then  
+    cutorch=ok
+    cunn=ok
+fi
+
 # Install base packages:
 $PREFIX/bin/luarocks install sundown       ||  sudo -E $PREFIX/bin/luarocks install sundown        ||   sundown=failed
 $PREFIX/bin/luarocks install cwrap         ||  sudo -E $PREFIX/bin/luarocks install cwrap          ||   cwrap=failed
@@ -67,8 +78,11 @@ $PREFIX/bin/luarocks install torch         ||  sudo -E $PREFIX/bin/luarocks inst
 $PREFIX/bin/luarocks install nn            ||  sudo -E $PREFIX/bin/luarocks install nn             ||   nn=failed
 $PREFIX/bin/luarocks install dok           ||  sudo -E $PREFIX/bin/luarocks install dok            ||   dok=failed
 $PREFIX/bin/luarocks install gnuplot       ||  sudo -E $PREFIX/bin/luarocks install gnuplot        ||   gnuplot=failed
-$PREFIX/bin/luarocks install cutorch       ||  sudo -E $PREFIX/bin/luarocks install cutorch        ||   cutorch=failed   
-$PREFIX/bin/luarocks install cunn          ||  sudo -E $PREFIX/bin/luarocks install cunn           ||   cunn=failed
+[ -x "$cutorch" ] && \
+($PREFIX/bin/luarocks install cutorch      ||  sudo -E $PREFIX/bin/luarocks install cutorch        ||   cutorch=failed )
+[ -x "$cunn" ] && \
+($PREFIX/bin/luarocks install cunn         ||  sudo -E $PREFIX/bin/luarocks install cunn           ||   cunn=failed )
+
 $PREFIX/bin/luarocks install qtlua         ||  sudo -E $PREFIX/bin/luarocks install qtlua          ||   qtlua=failed
 $PREFIX/bin/luarocks install qttorch       ||  sudo -E $PREFIX/bin/luarocks install qttorch        ||   qttorch=failed
 $PREFIX/bin/luarocks install luafilesystem ||  sudo -E $PREFIX/bin/luarocks install luafilesystem  ||   lfs=failed
@@ -91,9 +105,15 @@ echo "  + To install more packages, do:"
 echo "     $ luarocks search --all"
 echo "     $ luarocks install PKG_NAME"
 echo ""
-echo "  + Note: on MacOS, it's a good idea to install GCC 4.6 to enable OpenMP."
-echo "          You can do this by installing the GFortran bundles provided here:"
-echo "          http://gcc.gnu.org/wiki/GFortranBinaries"
+echo "  + Note: on MacOS, it's a good idea to install GCC 4.9 to enable OpenMP."
+echo "          You can do this by with brew"
+echo "     $ brew tap homebrew/versions"
+echo "     $ brew install gcc49"
+echo "   then edit ~/.profile with the lines"
+echo "     export CC=gcc-4.9"
+echo "     export CXX=g++-4.9"
+echo "   and make sure you load the new environmental variables into your session"
+echo "     $ source ~/.profile"
 echo ""
 echo "  + packages installed:"
 echo "    - sundown   : " $sundown
@@ -103,8 +123,8 @@ echo "    - torch     : " $torch
 echo "    - nn        : " $nn
 echo "    - dok       : " $dok
 echo "    - gnuplot   : " $gnuplot
-echo "    - cutorch   : " $cutorch
-echo "    - cunn      : " $cunn
+[ -x "$cutorch" ] && echo "    - cutorch   : " $cutorch
+[ -x "$cunn" ]    && echo "    - cunn      : " $cunn
 echo "    - qtlua     : " $qtlua
 echo "    - qttorch   : " $qttorch
 echo "    - lfs       : " $lfs
