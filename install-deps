@@ -57,7 +57,7 @@ elif [[ `uname` == 'Linux' ]]; then
 
     # Get and build OpenBlas (Torch is much better with a decent Blas)
     cd /tmp/
-    git clone http://github.com/xianyi/OpenBLAS.git
+    git clone https://github.com/xianyi/OpenBLAS.git
     cd OpenBLAS
     make NO_AFFINITY=1 USE_OPENMP=1
     sudo make install
