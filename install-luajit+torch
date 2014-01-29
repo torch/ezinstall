@@ -78,9 +78,9 @@ $PREFIX/bin/luarocks install torch         ||  sudo -E $PREFIX/bin/luarocks inst
 $PREFIX/bin/luarocks install nn            ||  sudo -E $PREFIX/bin/luarocks install nn             ||   nn=failed
 $PREFIX/bin/luarocks install dok           ||  sudo -E $PREFIX/bin/luarocks install dok            ||   dok=failed
 $PREFIX/bin/luarocks install gnuplot       ||  sudo -E $PREFIX/bin/luarocks install gnuplot        ||   gnuplot=failed
-[ -x "$cutorch" ] && \
+[ -n "$cutorch" ] && \
 ($PREFIX/bin/luarocks install cutorch      ||  sudo -E $PREFIX/bin/luarocks install cutorch        ||   cutorch=failed )
-[ -x "$cunn" ] && \
+[ -n "$cunn" ] && \
 ($PREFIX/bin/luarocks install cunn         ||  sudo -E $PREFIX/bin/luarocks install cunn           ||   cunn=failed )
 
 $PREFIX/bin/luarocks install qtlua         ||  sudo -E $PREFIX/bin/luarocks install qtlua          ||   qtlua=failed
@@ -123,8 +123,8 @@ echo "    - torch     : " $torch
 echo "    - nn        : " $nn
 echo "    - dok       : " $dok
 echo "    - gnuplot   : " $gnuplot
-[ -x "$cutorch" ] && echo "    - cutorch   : " $cutorch
-[ -x "$cunn" ]    && echo "    - cunn      : " $cunn
+[ -n "$cutorch" ] && echo "    - cutorch   : " $cutorch
+[ -n "$cunn" ]    && echo "    - cunn      : " $cunn
 echo "    - qtlua     : " $qtlua
 echo "    - qttorch   : " $qttorch
 echo "    - lfs       : " $lfs
