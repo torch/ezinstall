@@ -9,5 +9,5 @@
 curl -s https://raw.github.com/torch/ezinstall/master/install-deps | bash
 
 # Install torch
-curl -s https://raw.github.com/torch/ezinstall/master/install-torch | bash
+curl -s https://raw.github.com/torch/ezinstall/master/install-luajit+torch | bash
 
