@@ -1,7 +1,7 @@
 Torch (Easy) Install
 ====================
 
-This is just an easy install script for Torch7. Eventually, it will be folded into the main repo.
+This is just an easy install script for Torch7.
 
 The goal of this script is to enable one line installs. To install Torch on any machine, just do:
 
@@ -9,7 +9,9 @@ The goal of this script is to enable one line installs. To install Torch on any 
 
 Once installed, you should be able to run Torch with basic libraries:
 
-    torch -lparallel -loptim -lpl -limage
+    luajit -ltorch
+    # or, using our improved LuaJIT interpreter:
+    th -lparallel -loptim -lpl -limage
 
 This script has been tested on MacOS X 10.8, and Ubuntu 12.04. It should work on earlier 
 Ubuntus and MacOS Xs, but other platforms are not supported.
@@ -20,21 +22,20 @@ and the script needs to install dependencies.
 If you've already installed the dependencies, and don't have root privileges, you 
 can use this command to just install Torch:
 
-    curl -s https://raw.github.com/torch/ezinstall/master/install-torch | bash
+    curl -s https://raw.github.com/torch/ezinstall/master/install-luajit+torch | bash
 
 By default, it will install Torch in /usr/local/ , you can override this
 default path by doing:
 
-    curl -s https://raw.github.com/torch/ezinstall/master/install-torch | PREFIX=~/local bash
+    curl -s https://raw.github.com/torch/ezinstall/master/install-luajit+torch | PREFIX=~/local bash
 
-Torch7 now ships wih Luarocks, bundlde into an executable called torch-rocks.
-You can install new packages like this:
+We install Luarocks along with LuaJIT and Torch, so you can easily install new packages:
 
-    torch-rocks search lua-cjson
-    torch-rocks install lua-cjson
+    luarocks search lua-cjson
+    luarocks install lua-cjson
 
-By default, torch-rocks includes a link to our own Rocks repository, hosted
-[here](https://github.com/andresy/torch-rocks). If you wish to publish your 
+By default, luarocks includes a link to our own Rocks repository, hosted
+[here](https://github.com/torch/rocks). If you wish to publish your 
 packages as rocks for Torch, simply clone this repo, add your rocks, and
 make a pull request on Github!
 
