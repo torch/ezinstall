@@ -40,10 +40,10 @@ packages as rocks for Torch, simply clone this repo, add your rocks, and
 make a pull request on Github!
 
 ## Updating from a previous version
-Note that if you are coming from a previous version you are advise to clean up the old installation
-with the following commands
+Note that if you are coming from a previous version you are advised to clean up the old installation
+with the following commands on Mac (OS X)
 
-```
+```bash
 rm -rf ~/.luarocks
 rm -rf /usr/local/lib/luarocks/
 rm -rf /usr/local/lib/lua/
@@ -51,4 +51,20 @@ rm -rf /usr/local/share/torch/
 rm -rf /usr/local/share/lua/
 rm -rf /usr/local/lua/
 rm -rf /usr/local/etc/luarocks/
+rm     /usr/local/bin/torch
+rm     /usr/local/lib/{*lua*,*TH*}
+```
+
+If you are on *Linux* (*Ubuntu*) you will need to add `sudo` in front
+
+```bash
+sudo rm -rf ~/.luarocks
+sudo rm -rf /usr/local/lib/luarocks/
+sudo rm -rf /usr/local/lib/lua/
+sudo rm -rf /usr/local/share/torch/
+sudo rm -rf /usr/local/share/lua/
+sudo rm -rf /usr/local/lua/
+sudo rm -rf /usr/local/etc/luarocks/
+sudo rm     /usr/local/bin/torch
+sudo rm     /usr/local/lib/{*lua*,*TH*}
 ```
