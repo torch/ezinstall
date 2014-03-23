@@ -52,6 +52,7 @@ rm -rf /usr/local/share/lua/
 rm -rf /usr/local/lua/
 rm -rf /usr/local/etc/luarocks/
 rm     /usr/local/bin/torch
+rm     /usr/local/lib/{*lua*,*TH*}
 ```
 
 If you are on *Linux* (*Ubuntu*) you will need to add `sudo` in front
@@ -65,4 +66,5 @@ sudo rm -rf /usr/local/share/lua/
 sudo rm -rf /usr/local/lua/
 sudo rm -rf /usr/local/etc/luarocks/
 sudo rm     /usr/local/bin/torch
+sudo rm     /usr/local/lib/{*lua*,*TH*}
 ```
