@@ -16,7 +16,7 @@ if [[ `uname` == 'Darwin' ]]; then
     rm -rf /usr/local/share/lua/
     rm -rf /usr/local/lua/
     rm -rf /usr/local/etc/luarocks/
-    rm -f  /usr/local/bin/torch
+    rm -f  /usr/local/bin/{torch,th,qlua}
     rm -f  /usr/local/lib/{*lua*,*TH*}
 fi
 
@@ -30,7 +30,7 @@ if [[ `uname` == 'Linux' ]]; then
     sudo rm -rf /usr/local/share/lua/
     sudo rm -rf /usr/local/lua/
     sudo rm -rf /usr/local/etc/luarocks/
-    sudo rm -f  /usr/local/bin/torch
+    sudo rm -f  /usr/local/bin/{torch,th,qlua}
     sudo rm -f  /usr/local/lib/{*lua*,*TH*}
 fi
 
