@@ -9,7 +9,6 @@ echo
 # Check if we are on Mac (OS X)
 if [[ `uname` == 'Darwin' ]]; then
     echo 'Removing old Torch files from your Mac...'
-    echo
     rm -rf ~/.luarocks
     rm -rf /usr/local/lib/luarocks/
     rm -rf /usr/local/lib/lua/
@@ -17,14 +16,13 @@ if [[ `uname` == 'Darwin' ]]; then
     rm -rf /usr/local/share/lua/
     rm -rf /usr/local/lua/
     rm -rf /usr/local/etc/luarocks/
-    rm     /usr/local/bin/torch
-    rm     /usr/local/lib/{*lua*,*TH*}
+    rm -f  /usr/local/bin/torch
+    rm -f  /usr/local/lib/{*lua*,*TH*}
 fi
 
 # Check if we are on Linux (Ubuntu)
 if [[ `uname` == 'Linux' ]]; then
     echo 'Removing old Torch files from your Linux...'
-    echo
     sudo rm -rf ~/.luarocks
     sudo rm -rf /usr/local/lib/luarocks/
     sudo rm -rf /usr/local/lib/lua/
@@ -32,8 +30,8 @@ if [[ `uname` == 'Linux' ]]; then
     sudo rm -rf /usr/local/share/lua/
     sudo rm -rf /usr/local/lua/
     sudo rm -rf /usr/local/etc/luarocks/
-    sudo rm     /usr/local/bin/torch
-    sudo rm     /usr/local/lib/{*lua*,*TH*}
+    sudo rm -f  /usr/local/bin/torch
+    sudo rm -f  /usr/local/lib/{*lua*,*TH*}
 fi
 
 echo
