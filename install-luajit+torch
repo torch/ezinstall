@@ -35,8 +35,11 @@ mkdir build; cd build
 git checkout master; git pull
 rm -f CMakeCache.txt
 cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_BUILD_TYPE=Release
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 make
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 make install || sudo -E make install
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 # check if we are on mac and fix RPATH for local install
 path_to_install_name_tool=$(which install_name_tool)
 if [ -x "$path_to_install_name_tool" ] 
@@ -72,27 +75,44 @@ fi
 
 # Install base packages:
 $PREFIX/bin/luarocks install sundown       ||  sudo -E $PREFIX/bin/luarocks install sundown        ||   sundown=failed
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 $PREFIX/bin/luarocks install cwrap         ||  sudo -E $PREFIX/bin/luarocks install cwrap          ||   cwrap=failed
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 $PREFIX/bin/luarocks install paths         ||  sudo -E $PREFIX/bin/luarocks install paths          ||   paths=failed
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 $PREFIX/bin/luarocks install torch         ||  sudo -E $PREFIX/bin/luarocks install torch          ||   torch=failed
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 $PREFIX/bin/luarocks install nn            ||  sudo -E $PREFIX/bin/luarocks install nn             ||   nn=failed
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 $PREFIX/bin/luarocks install dok           ||  sudo -E $PREFIX/bin/luarocks install dok            ||   dok=failed
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 $PREFIX/bin/luarocks install gnuplot       ||  sudo -E $PREFIX/bin/luarocks install gnuplot        ||   gnuplot=failed
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 [ -x "$cutorch" ] && \
 ($PREFIX/bin/luarocks install cutorch      ||  sudo -E $PREFIX/bin/luarocks install cutorch        ||   cutorch=failed )
 [ -x "$cunn" ] && \
 ($PREFIX/bin/luarocks install cunn         ||  sudo -E $PREFIX/bin/luarocks install cunn           ||   cunn=failed )
 
 $PREFIX/bin/luarocks install qtlua         ||  sudo -E $PREFIX/bin/luarocks install qtlua          ||   qtlua=failed
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 $PREFIX/bin/luarocks install qttorch       ||  sudo -E $PREFIX/bin/luarocks install qttorch        ||   qttorch=failed
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 $PREFIX/bin/luarocks install luafilesystem ||  sudo -E $PREFIX/bin/luarocks install luafilesystem  ||   lfs=failed
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 $PREFIX/bin/luarocks install penlight      ||  sudo -E $PREFIX/bin/luarocks install penlight       ||   penlight=failed
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 $PREFIX/bin/luarocks install sys           ||  sudo -E $PREFIX/bin/luarocks install sys            ||   sys=failed
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 $PREFIX/bin/luarocks install xlua          ||  sudo -E $PREFIX/bin/luarocks install xlua           ||   xlua=failed
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 $PREFIX/bin/luarocks install image         ||  sudo -E $PREFIX/bin/luarocks install image          ||   image=failed
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 $PREFIX/bin/luarocks install optim         ||  sudo -E $PREFIX/bin/luarocks install optim          ||   optim=failed
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 $PREFIX/bin/luarocks install lua-cjson     ||  sudo -E $PREFIX/bin/luarocks install lua-cjson      ||   cjson=failed
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 $PREFIX/bin/luarocks install trepl         ||  sudo -E $PREFIX/bin/luarocks install trepl          ||   trepl=failed
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 
 # Done.
 echo ""
