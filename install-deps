@@ -61,9 +61,15 @@ elif [[ `uname` == 'Linux' ]]; then
     git clone https://github.com/xianyi/OpenBLAS.git
     cd OpenBLAS
     make NO_AFFINITY=1 USE_OPENMP=1
-    RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+    RET=$?; if [ $RET -ne 0 ]; then
+	echo "Error. OpenBLAS could not be compiled";
+	exit $RET;
+    fi
     sudo make install
-    RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+    RET=$?; if [ $RET -ne 0 ]; then
+	echo "Error. OpenBLAS could not be compiled";
+	exit $RET;
+    fi
 
 else
     # Unsupported
