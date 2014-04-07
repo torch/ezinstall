@@ -35,8 +35,11 @@ mkdir build; cd build
 git checkout master; git pull
 rm -f CMakeCache.txt
 cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_BUILD_TYPE=Release
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 make
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 make install || sudo -E make install
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 # check if we are on mac and fix RPATH for local install
 path_to_install_name_tool=$(which install_name_tool)
 if [ -x "$path_to_install_name_tool" ] 
@@ -71,28 +74,45 @@ then
 fi
 
 # Install base packages:
-$PREFIX/bin/luarocks install sundown       ||  sudo -E $PREFIX/bin/luarocks install sundown        ||   sundown=failed
-$PREFIX/bin/luarocks install cwrap         ||  sudo -E $PREFIX/bin/luarocks install cwrap          ||   cwrap=failed
-$PREFIX/bin/luarocks install paths         ||  sudo -E $PREFIX/bin/luarocks install paths          ||   paths=failed
-$PREFIX/bin/luarocks install torch         ||  sudo -E $PREFIX/bin/luarocks install torch          ||   torch=failed
-$PREFIX/bin/luarocks install nn            ||  sudo -E $PREFIX/bin/luarocks install nn             ||   nn=failed
-$PREFIX/bin/luarocks install dok           ||  sudo -E $PREFIX/bin/luarocks install dok            ||   dok=failed
-$PREFIX/bin/luarocks install gnuplot       ||  sudo -E $PREFIX/bin/luarocks install gnuplot        ||   gnuplot=failed
+$PREFIX/bin/luarocks install sundown       ||  sudo -E $PREFIX/bin/luarocks install sundown
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install cwrap         ||  sudo -E $PREFIX/bin/luarocks install cwrap  
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install paths         ||  sudo -E $PREFIX/bin/luarocks install paths  
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install torch         ||  sudo -E $PREFIX/bin/luarocks install torch  
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install nn            ||  sudo -E $PREFIX/bin/luarocks install nn     
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install dok           ||  sudo -E $PREFIX/bin/luarocks install dok    
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install gnuplot       ||  sudo -E $PREFIX/bin/luarocks install gnuplot
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 [ -x "$cutorch" ] && \
 ($PREFIX/bin/luarocks install cutorch      ||  sudo -E $PREFIX/bin/luarocks install cutorch        ||   cutorch=failed )
 [ -x "$cunn" ] && \
 ($PREFIX/bin/luarocks install cunn         ||  sudo -E $PREFIX/bin/luarocks install cunn           ||   cunn=failed )
 
-$PREFIX/bin/luarocks install qtlua         ||  sudo -E $PREFIX/bin/luarocks install qtlua          ||   qtlua=failed
-$PREFIX/bin/luarocks install qttorch       ||  sudo -E $PREFIX/bin/luarocks install qttorch        ||   qttorch=failed
-$PREFIX/bin/luarocks install luafilesystem ||  sudo -E $PREFIX/bin/luarocks install luafilesystem  ||   lfs=failed
-$PREFIX/bin/luarocks install penlight      ||  sudo -E $PREFIX/bin/luarocks install penlight       ||   penlight=failed
-$PREFIX/bin/luarocks install sys           ||  sudo -E $PREFIX/bin/luarocks install sys            ||   sys=failed
-$PREFIX/bin/luarocks install xlua          ||  sudo -E $PREFIX/bin/luarocks install xlua           ||   xlua=failed
-$PREFIX/bin/luarocks install image         ||  sudo -E $PREFIX/bin/luarocks install image          ||   image=failed
-$PREFIX/bin/luarocks install optim         ||  sudo -E $PREFIX/bin/luarocks install optim          ||   optim=failed
-$PREFIX/bin/luarocks install lua-cjson     ||  sudo -E $PREFIX/bin/luarocks install lua-cjson      ||   cjson=failed
-$PREFIX/bin/luarocks install trepl         ||  sudo -E $PREFIX/bin/luarocks install trepl          ||   trepl=failed
+$PREFIX/bin/luarocks install qtlua         ||  sudo -E $PREFIX/bin/luarocks install qtlua  
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install qttorch       ||  sudo -E $PREFIX/bin/luarocks install qttorch
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install luafilesystem ||  sudo -E $PREFIX/bin/luarocks install luafilesystem
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install penlight      ||  sudo -E $PREFIX/bin/luarocks install penlight 
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install sys           ||  sudo -E $PREFIX/bin/luarocks install sys      
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install xlua          ||  sudo -E $PREFIX/bin/luarocks install xlua     
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install image         ||  sudo -E $PREFIX/bin/luarocks install image    
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install optim         ||  sudo -E $PREFIX/bin/luarocks install optim    
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install lua-cjson     ||  sudo -E $PREFIX/bin/luarocks install lua-cjson
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install trepl         ||  sudo -E $PREFIX/bin/luarocks install trepl    
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 
 # Done.
 echo ""
@@ -116,23 +136,23 @@ echo "   and make sure you load the new environmental variables into your sessio
 echo "     $ source ~/.profile"
 echo ""
 echo "  + packages installed:"
-echo "    - sundown   : " $sundown
-echo "    - cwrap     : " $cwrap
-echo "    - paths     : " $paths
-echo "    - torch     : " $torch
-echo "    - nn        : " $nn
-echo "    - dok       : " $dok
-echo "    - gnuplot   : " $gnuplot
+echo "    - sundown   " 
+echo "    - cwrap     "
+echo "    - paths     "
+echo "    - torch     "
+echo "    - nn        "
+echo "    - dok       "
+echo "    - gnuplot   "
 [ -x "$cutorch" ] && echo "    - cutorch   : " $cutorch
 [ -x "$cunn" ]    && echo "    - cunn      : " $cunn
-echo "    - qtlua     : " $qtlua
-echo "    - qttorch   : " $qttorch
-echo "    - lfs       : " $lfs
-echo "    - penlight  : " $penlight
-echo "    - sys       : " $sys
-echo "    - xlua      : " $xlua
-echo "    - image     : " $image
-echo "    - optim     : " $optim
-echo "    - cjson     : " $cjson
-echo "    - trepl     : " $trepl
+echo "    - qtlua     "
+echo "    - qttorch   "
+echo "    - lfs       "
+echo "    - penlight  "
+echo "    - sys       "
+echo "    - xlua      "
+echo "    - image     "
+echo "    - optim     "
+echo "    - cjson     "
+echo "    - trepl     "
 echo ""
