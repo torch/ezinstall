@@ -14,8 +14,8 @@ if [[ `uname` == 'Darwin' ]]; then
     rm -rf /usr/local/share/{torch,cmake/torch/}
     rm -rf /usr/local/etc/{luarocks/,torchrocks/}
     rm -rf /usr/local/include/torch/}
+    rm -rf ~/.luarocks
     # Removing files
-    rm -f  ~/.luarocks
     rm -f  /usr/local/bin/{torch,th,qlua,json2lua,lua2json,torch-lua,torch-qlua,torch-rocks,torch-rocks-admin}
     rm -f  /usr/local/lib/{*lua*,*TH*}
 fi
@@ -28,8 +28,8 @@ if [[ `uname` == 'Linux' ]]; then
     sudo rm -rf /usr/local/share/{torch,cmake/torch/}
     sudo rm -rf /usr/local/etc/{luarocks/,torchrocks/}
     sudo rm -rf /usr/local/include/torch/}
+    sudo rm -rf ~/.luarocks
     # Removing files
-    sudo rm -f  ~/.luarocks
     sudo rm -f  /usr/local/bin/{torch,th,qlua,json2lua,lua2json,torch-lua,torch-qlua,torch-rocks,torch-rocks-admin}
     sudo rm -f  /usr/local/lib/{*lua*,*TH*}
 fi
