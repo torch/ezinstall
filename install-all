@@ -6,7 +6,7 @@
 ######################################################################
 
 # Install dependencies
-curl -s https://raw.github.com/torch/ezinstall/master/install-deps | bash
+curl -s https://raw.githubusercontent.com/torch/ezinstall/master/install-deps | bash
 RET=$?; if [ $RET -ne 0 ]; then
     echo " "
     echo " "
@@ -17,5 +17,5 @@ RET=$?; if [ $RET -ne 0 ]; then
     echo " "
 fi
 # Install torch
-curl -s https://raw.github.com/torch/ezinstall/master/install-luajit+torch | bash
+curl -s https://raw.githubusercontent.com/torch/ezinstall/master/install-luajit+torch | bash
 RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi

@@ -14,7 +14,7 @@ if [[ `uname` == 'Darwin' ]]; then
 
     # Install Homebrew (pkg manager):
     if [[ `which brew` == '' ]]; then
-        ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go/install)"
+        ruby -e "$(curl -fsSL https://raw.githubusercontent.com/mxcl/homebrew/go/install)"
     fi
 
     # Install dependencies:
