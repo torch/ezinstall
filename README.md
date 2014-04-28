@@ -5,7 +5,7 @@ This is just an easy install script for Torch7.
 The goal of this script is to enable one line installs. To install Torch on any machine, just do:
 
 ```bash
-curl -s https://raw.github.com/torch/ezinstall/master/install-all | bash
+curl -s https://raw.githubusercontent.com/torch/ezinstall/master/install-all | bash
 ```
 
 Once installed, you should be able to run Torch with basic libraries:
@@ -23,13 +23,13 @@ On Ubuntu you'll need 'sudo' privileges, as the default install is global, and t
 If you've already installed the dependencies, and don't have root privileges, you can use this command to just install Torch:
 
 ```bash
-curl -s https://raw.github.com/torch/ezinstall/master/install-luajit+torch | bash
+curl -s https://raw.githubusercontent.com/torch/ezinstall/master/install-luajit+torch | bash
 ```
 
 By default, it will install Torch in /usr/local/ , you can override this default path by doing:
 
 ```bash
-curl -s https://raw.github.com/torch/ezinstall/master/install-luajit+torch | PREFIX=~/local bash
+curl -s https://raw.githubusercontent.com/torch/ezinstall/master/install-luajit+torch | PREFIX=~/local bash
 ```
 
 We install Luarocks along with LuaJIT and Torch, so you can easily install new packages:
@@ -45,5 +45,5 @@ By default, luarocks includes a link to our own Rocks repository, hosted [here](
 Note that if you are coming from a previous version you are advise to clean up the old installation with the following command
 
 ```bash
-curl -s https://raw.github.com/torch/ezinstall/master/clean-old.sh | bash
+curl -s https://raw.githubusercontent.com/torch/ezinstall/master/clean-old.sh | bash
 ```
