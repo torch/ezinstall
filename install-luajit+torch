@@ -87,9 +87,9 @@ $PREFIX/bin/luarocks install dok           ||  sudo -E $PREFIX/bin/luarocks inst
 RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 $PREFIX/bin/luarocks install gnuplot       ||  sudo -E $PREFIX/bin/luarocks install gnuplot
 RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-[ -x "$cutorch" ] && \
+[ -n "$cutorch" ] && \
 ($PREFIX/bin/luarocks install cutorch      ||  sudo -E $PREFIX/bin/luarocks install cutorch        ||   cutorch=failed )
-[ -x "$cunn" ] && \
+[ -n "$cunn" ] && \
 ($PREFIX/bin/luarocks install cunn         ||  sudo -E $PREFIX/bin/luarocks install cunn           ||   cunn=failed )
 
 $PREFIX/bin/luarocks install qtlua         ||  sudo -E $PREFIX/bin/luarocks install qtlua  
@@ -135,23 +135,23 @@ echo "   and make sure you load the new environmental variables into your sessio
 echo "     $ source ~/.profile"
 echo ""
 echo "  + packages installed:"
-echo "    - sundown   " 
-echo "    - cwrap     "
-echo "    - paths     "
-echo "    - torch     "
-echo "    - nn        "
-echo "    - dok       "
-echo "    - gnuplot   "
-[ -x "$cutorch" ] && echo "    - cutorch   : " $cutorch
-[ -x "$cunn" ]    && echo "    - cunn      : " $cunn
-echo "    - qtlua     "
-echo "    - qttorch   "
-echo "    - lfs       "
-echo "    - penlight  "
-echo "    - sys       "
-echo "    - xlua      "
-echo "    - image     "
-echo "    - optim     "
-echo "    - cjson     "
-echo "    - trepl     "
+echo "    - sundown   : " $sundown
+echo "    - cwrap     : " $cwrap
+echo "    - paths     : " $paths
+echo "    - torch     : " $torch
+echo "    - nn        : " $nn
+echo "    - dok       : " $dok
+echo "    - gnuplot   : " $gnuplot
+[ -n "$cutorch" ] && echo "    - cutorch   : " $cutorch
+[ -n "$cunn" ]    && echo "    - cunn      : " $cunn
+echo "    - qtlua     : " $qtlua
+echo "    - qttorch   : " $qttorch
+echo "    - lfs       : " $lfs
+echo "    - penlight  : " $penlight
+echo "    - sys       : " $sys
+echo "    - xlua      : " $xlua
+echo "    - image     : " $image
+echo "    - optim     : " $optim
+echo "    - cjson     : " $cjson
+echo "    - trepl     : " $trepl
 echo ""
