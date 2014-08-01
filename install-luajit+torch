@@ -43,7 +43,7 @@ RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 path_to_install_name_tool=$(which install_name_tool)
 if [ -x "$path_to_install_name_tool" ] 
 then
-   install_name_tool -id ${PREFIX}/lib/libluajit.dylib ${PREFIX}/lib/libluajit.dylib
+    install_name_tool -id ${PREFIX}/lib/libluajit.dylib ${PREFIX}/lib/libluajit.dylib
 fi
 
 # Statuses:
@@ -73,45 +73,28 @@ then
 fi
 
 # Install base packages:
-$PREFIX/bin/luarocks install sundown       ||  sudo -E $PREFIX/bin/luarocks install sundown
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install cwrap         ||  sudo -E $PREFIX/bin/luarocks install cwrap  
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install paths         ||  sudo -E $PREFIX/bin/luarocks install paths  
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install torch         ||  sudo -E $PREFIX/bin/luarocks install torch  
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install nn            ||  sudo -E $PREFIX/bin/luarocks install nn     
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install dok           ||  sudo -E $PREFIX/bin/luarocks install dok    
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install gnuplot       ||  sudo -E $PREFIX/bin/luarocks install gnuplot
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install sundown       ||  sudo -E $PREFIX/bin/luarocks install sundown  || exit 1
+$PREFIX/bin/luarocks install cwrap         ||  sudo -E $PREFIX/bin/luarocks install cwrap    || exit 1
+$PREFIX/bin/luarocks install paths         ||  sudo -E $PREFIX/bin/luarocks install paths    || exit 1
+$PREFIX/bin/luarocks install torch         ||  sudo -E $PREFIX/bin/luarocks install torch    || exit 1
+$PREFIX/bin/luarocks install nn            ||  sudo -E $PREFIX/bin/luarocks install nn       || exit 1
+$PREFIX/bin/luarocks install dok           ||  sudo -E $PREFIX/bin/luarocks install dok      || exit 1
+$PREFIX/bin/luarocks install gnuplot       ||  sudo -E $PREFIX/bin/luarocks install gnuplot  || exit 1
 [ -n "$cutorch" ] && \
-($PREFIX/bin/luarocks install cutorch      ||  sudo -E $PREFIX/bin/luarocks install cutorch        ||   cutorch=failed )
+    ($PREFIX/bin/luarocks install cutorch      ||  sudo -E $PREFIX/bin/luarocks install cutorch        ||   cutorch=failed )
 [ -n "$cunn" ] && \
-($PREFIX/bin/luarocks install cunn         ||  sudo -E $PREFIX/bin/luarocks install cunn           ||   cunn=failed )
+    ($PREFIX/bin/luarocks install cunn         ||  sudo -E $PREFIX/bin/luarocks install cunn           ||   cunn=failed )
 
-$PREFIX/bin/luarocks install qtlua         ||  sudo -E $PREFIX/bin/luarocks install qtlua  
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install qttorch       ||  sudo -E $PREFIX/bin/luarocks install qttorch
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install luafilesystem ||  sudo -E $PREFIX/bin/luarocks install luafilesystem
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install penlight      ||  sudo -E $PREFIX/bin/luarocks install penlight 
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install sys           ||  sudo -E $PREFIX/bin/luarocks install sys      
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install xlua          ||  sudo -E $PREFIX/bin/luarocks install xlua     
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install image         ||  sudo -E $PREFIX/bin/luarocks install image    
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install optim         ||  sudo -E $PREFIX/bin/luarocks install optim    
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install lua-cjson     ||  sudo -E $PREFIX/bin/luarocks install lua-cjson
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install trepl         ||  sudo -E $PREFIX/bin/luarocks install trepl    
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install qtlua         ||  sudo -E $PREFIX/bin/luarocks install qtlua           || exit 1
+$PREFIX/bin/luarocks install qttorch       ||  sudo -E $PREFIX/bin/luarocks install qttorch         || exit 1
+$PREFIX/bin/luarocks install luafilesystem ||  sudo -E $PREFIX/bin/luarocks install luafilesystem   || exit 1
+$PREFIX/bin/luarocks install penlight      ||  sudo -E $PREFIX/bin/luarocks install penlight        || exit 1
+$PREFIX/bin/luarocks install sys           ||  sudo -E $PREFIX/bin/luarocks install sys             || exit 1
+$PREFIX/bin/luarocks install xlua          ||  sudo -E $PREFIX/bin/luarocks install xlua            || exit 1
+$PREFIX/bin/luarocks install image         ||  sudo -E $PREFIX/bin/luarocks install image           || exit 1
+$PREFIX/bin/luarocks install optim         ||  sudo -E $PREFIX/bin/luarocks install optim           || exit 1
+$PREFIX/bin/luarocks install lua-cjson     ||  sudo -E $PREFIX/bin/luarocks install lua-cjson       || exit 1
+$PREFIX/bin/luarocks install trepl         ||  sudo -E $PREFIX/bin/luarocks install trepl           || exit 1
 
 # Done.
 echo ""
