@@ -22,8 +22,10 @@ if [[ `uname` == 'Darwin' ]]; then
     brew install git readline cmake wget qt
     brew install libjpeg imagemagick zeromq 
     brew link readline --force
+    brew install caskroom/cask/brew-cask
+    brew cask install xquartz
     brew remove gnuplot
-    brew install gnuplot --wx --cairo --pdf --with-x
+    brew install gnuplot --wx --cairo --pdf --with-x --nolua
 
 elif [[ `uname` == 'Linux' ]]; then
     # Aptitude?
