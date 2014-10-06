@@ -11,12 +11,12 @@ if [[ `uname` == 'Darwin' ]]; then
     echo 'Removing old Torch files from your Mac...'
     # Removing folders
     rm -rf /usr/local/lib/{luarocks/,lua/,torch/,torchrocks/}
-    rm -rf /usr/local/share/{torch,cmake/torch/}
+    rm -rf /usr/local/share/{torch,cmake/torch/,lua}
     rm -rf /usr/local/etc/{luarocks/,torchrocks/}
-    rm -rf /usr/local/include/torch/}
+    rm -rf /usr/local/include/{torch,TH,lauxlib.h,lua.h,lua.hpp,luaT.h,luaconf.h,luajit.h,lualib.h,qtlua}
     rm -rf ~/.luarocks
     # Removing files
-    rm -f  /usr/local/bin/{torch,th,qlua,json2lua,lua2json,torch-lua,torch-qlua,torch-rocks,torch-rocks-admin}
+    rm -f  /usr/local/bin/{torch,th,qlua,json2lua,lua2json,torch-lua,torch-qlua,torch-rocks,torch-rocks-admin,luajit,luarocks,macqlua,mdcat,qlua}
     rm -f  /usr/local/lib/{*lua*,*TH*}
 fi
 
@@ -25,12 +25,12 @@ if [[ `uname` == 'Linux' ]]; then
     echo 'Removing old Torch files from your Linux...'
     # Removing folders
     sudo rm -rf /usr/local/lib/{luarocks/,lua/,torch/,torchrocks/}
-    sudo rm -rf /usr/local/share/{torch,cmake/torch/}
+    sudo rm -rf /usr/local/share/{torch,cmake/torch/,lua}
     sudo rm -rf /usr/local/etc/{luarocks/,torchrocks/}
-    sudo rm -rf /usr/local/include/torch/}
+    sudo rm -rf /usr/local/include/{torch,TH,lauxlib.h,lua.h,lua.hpp,luaT.h,luaconf.h,luajit.h,lualib.h,qtlua}
     sudo rm -rf ~/.luarocks
     # Removing files
-    sudo rm -f  /usr/local/bin/{torch,th,qlua,json2lua,lua2json,torch-lua,torch-qlua,torch-rocks,torch-rocks-admin}
+    sudo rm -f  /usr/local/bin/{torch,th,qlua,json2lua,lua2json,torch-lua,torch-qlua,torch-rocks,torch-rocks-admin,luajit,luarocks,mdcat,qlua}
     sudo rm -f  /usr/local/lib/{*lua*,*TH*}
 fi
 
