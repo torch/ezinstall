@@ -62,7 +62,7 @@ elif [[ `uname` == 'Linux' ]]; then
     cd /tmp/
     git clone https://github.com/xianyi/OpenBLAS.git
     cd OpenBLAS
-    make NO_AFFINITY=1 USE_OPENMP=1
+    make NO_AFFINITY=1 
     RET=$?; if [ $RET -ne 0 ]; then
 	echo "Error. OpenBLAS could not be compiled";
 	exit $RET;
