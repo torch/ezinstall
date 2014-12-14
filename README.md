@@ -16,9 +16,9 @@ luajit -ltorch
 th -lparallel -loptim -lpl -limage
 ```
 
-This script has been tested on MacOS X 10.8, and Ubuntu 12.04. It should work on earlier Ubuntus and MacOS Xs, but other platforms are not supported.
+This script has been tested on MacOS X 10.8, Ubuntu 12.04 and Fedora 20. It should work on earlier Ubuntus and MacOS Xs, but other platforms are not supported.
 
-On Ubuntu you'll need 'sudo' privileges, as the default install is global, and the script needs to install dependencies.
+On Ubuntu and Fedora you'll need 'sudo' privileges, as the default install is global, and the script needs to install dependencies.
 
 If you've already installed the dependencies, and don't have root privileges, you can use this command to just install Torch:
 
