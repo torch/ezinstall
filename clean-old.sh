@@ -29,6 +29,7 @@ if [[ `uname` == 'Linux' ]]; then
     sudo rm -rf /usr/local/etc/{luarocks/,torchrocks/}
     sudo rm -rf /usr/local/include/{torch,TH,THC,lauxlib.h,lua.h,lua.hpp,luaT.h,luaconf.h,luajit.h,lualib.h,qtlua}
     sudo rm -rf ~/.luarocks
+    sudo rm -rf ~/.cache/luarocks*
     # Removing files
     sudo rm -f  /usr/local/bin/{torch,th,qlua,json2lua,lua2json,torch-lua,torch-qlua,torch-rocks,torch-rocks-admin,luajit,luarocks,mdcat,qlua}
     sudo rm -f  /usr/local/lib/{*lua*,*TH*}
