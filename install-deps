@@ -111,8 +111,6 @@ elif [[ `uname` == 'Linux' ]]; then
             sudo apt-get install -y unzip
             sudo apt-get install -y gnuplot
             sudo apt-get install -y gnuplot-x11
-            sudo add-apt-repository ppa:chris-lea/zeromq
-            sudo apt-get update
         fi
 
         install_openblas
