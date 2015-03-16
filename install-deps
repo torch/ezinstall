@@ -55,8 +55,11 @@ elif [[ `uname` == 'Linux' ]]; then
         export DEBIAN_FRONTEND=noninteractive
         distribution="ubuntu"
         ubuntu_major_version=`lsb_release -a 2>&1|grep Release|cut -f2 -d":"|sed '/^$/d;s/[[:blank:]]//g' |cut -f1 -d'.'`
+    elif [[ "$(grep 'ID="centos"' /etc/os-release 2>/dev/null)" != "" ]]; then
+        distribution="centos"
+        centos_major_version=`grep VERSION_ID /etc/os-release | cut -f2 -d"=" | sed 's/"//g'`
     else
-        echo '==> Only Ubuntu and Fedora distributions are supported.'
+        echo '==> Only Ubuntu, Fedora and CentOS distributions are supported.'
         exit
     fi
 
@@ -126,6 +129,19 @@ elif [[ `uname` == 'Linux' ]]; then
             install_openblas
         else
             echo "Only Fedora 20 is supported for now, aborting."
+            exit
+        fi
+    elif [[ $distribution == 'centos' ]]; then
+        if [[ $centos_major_version == '7' ]]; then
+            sudo yum install -y cmake curl readline-devel ncurses-devel \
+                                gcc-c++ gcc-gfortran git gnuplot unzip \
+                                nodejs npm libjpeg-turbo-devel libpng-devel \
+                                ImageMagick GraphicsMagick-devel fftw-devel \
+                                sox-devel sox SDL2-devel zeromq3-devel \
+                                qt-devel qtwebkit-devel sox-plugins-freeworld
+            install_openblas
+        else
+            echo "Only CentOS 7 is supported for now, aborting."
             exit
         fi
     fi
