@@ -42,11 +42,14 @@ if [[ `uname` == 'Darwin' ]]; then
 
     # Install dependencies:
     brew update
-    brew install git readline cmake wget qt
-    brew install libjpeg imagemagick zeromq graphicsmagick
-    brew link readline --force
-    brew install caskroom/cask/brew-cask
-    brew cask install xquartz
+    for pkg in git readline cmake wget qt libjpeg jpeg imagemagick zeromq graphicsmagick caskroom/cask/brew-cask; do
+        if brew list -1 | grep -q "^${pkg}\$"; then
+            brew uninstall --force $pkg
+        fi
+        brew install --force $pkg
+    done
+
+    brew cask install --force xquartz
     brew remove gnuplot
     brew install gnuplot --with-wxmac --with-cairo --with-pdflib-lite --with-x11 --without-lua
 
