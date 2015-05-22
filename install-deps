@@ -27,6 +27,14 @@ install_openblas() {
     fi
 }
 
+install_openblas_AUR() {
+    # build and install an OpenBLAS package for Archlinux
+    cd /tmp && \
+    curl https://aur.archlinux.org/packages/op/openblas-lapack/openblas-lapack.tar.gz | tar zxf - && \
+    cd openblas-lapack && \
+    makepkg -csi
+}
+
 # Based on Platform:
 if [[ `uname` == 'Darwin' ]]; then
     # GCC?
@@ -57,6 +65,8 @@ elif [[ `uname` == 'Linux' ]]; then
     if [[ "x$?" == "x0" ]]; then
         fedora_major_version=`grep VERSION_ID /etc/os-release |cut -f2 -d"="`
         distribution="fedora"
+    elif (grep -q "ID=arch" /etc/os-release &> /dev/null); then
+        distribution="archlinux"
     elif [[ `which apt-get` != '' ]]; then
         export DEBIAN_FRONTEND=noninteractive
         distribution="ubuntu"
@@ -123,6 +133,34 @@ elif [[ `uname` == 'Linux' ]]; then
         fi
 
         install_openblas
+
+    elif [[ $distribution == 'archlinux' ]]; then
+        echo "Archlinux installation"
+        sudo pacman -S --quiet --noconfirm \
+            cmake curl readline ncurses git \
+            gnuplot unzip libjpeg-turbo libpng libpng \
+            imagemagick graphicsmagick fftw sox sdl2 zeromq \
+            qt4 qtwebkit
+        # if GCC is not installed yet
+        (pacman -Qi gcc &>/dev/null) || \
+            (pacman -Qi gcc-multilib &>/dev/null) ;
+        gcc_installed=$?
+        if [[ $gcc_installed -ne 0 ]]; then
+            if [[ "machine:`uname -m`" == "machine:x86_64" ]]; then
+                gcc_package="gcc-multilib"
+            else
+                gcc_package="gcc"
+            fi
+            sudo pacman -S --quiet --noconfirm ${gcc_package} gcc-fortran
+        fi
+        # if openblas is not installed yet
+        (pacman -Qs openblas &> /dev/null) ;
+        openblas_installed=$?
+        if [[ $openblas_installed -ne 0 ]]; then
+            install_openblas_AUR
+        else
+            echo "OpenBLAS is already installed"
+        fi
 
     elif [[ $distribution == 'fedora' ]]; then
         if [[ $fedora_major_version == '20' ]]; then
