@@ -196,5 +196,11 @@ else
     exit
 fi
 
+ipython_version=$(ipython --version|cut -f1 -d'.')
+if [[ $ipython_version != 2 && ipython_version != 3 ]]; then {
+    echo 'WARNING: Your ipython version is too old.  Type "ipython --version" to see this.  Should be at least version 2'
+} fi
+
 # Done.
 echo "==> Torch7's dependencies have been installed"
+
