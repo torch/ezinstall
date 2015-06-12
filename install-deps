@@ -35,6 +35,22 @@ install_openblas_AUR() {
     makepkg -csi
 }
 
+chekupdates_archlinux() {
+    # checks if archlinux is up to date
+    if [[ -n $(checkupdates) ]]; then
+        echo "It seems that your system is not up to date."
+        echo "It is recommended to update your system before going any further."
+        read -p "Continue installation ? [y/N] " yn
+            case $yn in
+                Y|y ) echo "Continuing...";;
+                N|n ) ;;
+                * ) echo "Installation aborted."
+                    echo "Relauch this script after updating your system with 'pacman -Syu'."
+                    exit 0
+            esac
+    fi
+}
+
 # Based on Platform:
 if [[ `uname` == 'Darwin' ]]; then
     # GCC?
@@ -136,16 +152,7 @@ elif [[ `uname` == 'Linux' ]]; then
 
     elif [[ $distribution == 'archlinux' ]]; then
         echo "Archlinux installation"
-        if [[ -n $(checkupdates) ]]; then
-            echo "It seems that your system is not up to date."
-            echo "It is recommended to update your system before going any further."
-            read -p "Continue installation ? [y/N] " yn
-                case $yn in
-                    Y|y ) echo "Continuing...";;
-                    N|n ) ;;
-                    * ) echo "Installation aborted."; echo "Relauch this script after updating your system with 'pacman -Syu'."; exit 0;
-                esac
-        fi
+        chekupdates_archlinux
         sudo pacman -S --quiet --noconfirm \
             cmake curl readline ncurses git \
             gnuplot unzip libjpeg-turbo libpng libpng \
