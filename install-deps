@@ -119,56 +119,28 @@ elif [[ "$(uname)" == 'Linux' ]]; then
 
     # Install dependencies for Torch:
     if [[ $distribution == 'ubuntu' ]]; then
+        declare -a target_pkgs
+        target_pkgs=( python-software-properties build-essential gcc g++ curl \
+                      cmake libreadline-dev git-core libqt4-core libqt4-gui \
+                      libqt4-dev libjpeg-dev libpng-dev ncurses-dev \
+                      imagemagick libzmq3-dev gfortran unzip gnuplot \
+                      gnuplot-x11 )
+        sudo apt-get update
         if [[ $ubuntu_major_version == '14' ]]; then
             echo '==> Found Ubuntu version 14.xx, installing dependencies'
-            sudo apt-get update
-            sudo apt-get -y install python-software-properties
             sudo apt-get -y install software-properties-common
             sudo apt-get update
-            sudo apt-get install -y build-essential
-            sudo apt-get install -y gcc g++
-            sudo apt-get install -y cmake
-            sudo apt-get install -y curl
-            sudo apt-get install -y libreadline-dev
-            sudo apt-get install -y git-core
-            sudo apt-get install -y libqt4-core libqt4-gui libqt4-dev
-            sudo apt-get install -y libjpeg-dev
-            sudo apt-get install -y libpng-dev
-            sudo apt-get install -y ncurses-dev
-            sudo apt-get install -y imagemagick
-            sudo apt-get install -y libzmq3-dev
-            sudo apt-get install -y gfortran
-            sudo apt-get install -y unzip
-            sudo apt-get install -y gnuplot
-            sudo apt-get install -y gnuplot-x11
             sudo apt-get install -y libsdl2-dev
             sudo apt-get install -y libgraphicsmagick1-dev
             sudo apt-get install -y nodejs
             sudo apt-get install -y npm
             sudo apt-get install -y libfftw3-dev sox libsox-dev libsox-fmt-all
-            sudo apt-get update
         else
-            sudo apt-get install -y python-software-properties
             sudo add-apt-repository ppa:chris-lea/zeromq
             sudo add-apt-repository ppa:chris-lea/node.js
-            sudo apt-get update
-            sudo apt-get install -y build-essential
-            sudo apt-get install -y gcc g++
-            sudo apt-get install -y cmake
-            sudo apt-get install -y curl
-            sudo apt-get install -y libreadline-dev
-            sudo apt-get install -y git-core
-            sudo apt-get install -y libqt4-core libqt4-gui libqt4-dev
-            sudo apt-get install -y libjpeg-dev
-            sudo apt-get install -y libpng-dev
-            sudo apt-get install -y ncurses-dev
-            sudo apt-get install -y imagemagick
-            sudo apt-get install -y libzmq3-dev
-            sudo apt-get install -y gfortran
-            sudo apt-get install -y unzip
-            sudo apt-get install -y gnuplot
-            sudo apt-get install -y gnuplot-x11
         fi
+        sudo apt-get update
+        sudo apt-get install -y "${target_pkgs[@]}"
 
         install_openblas
 
