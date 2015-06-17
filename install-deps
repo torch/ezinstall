@@ -74,22 +74,28 @@ if [[ `uname` == 'Darwin' ]]; then
     brew remove gnuplot
     brew install gnuplot --with-wxmac --with-cairo --with-pdflib-lite --with-x11 --without-lua
 
-elif [[ `uname` == 'Linux' ]]; then
+elif [[ "$(uname)" == 'Linux' ]]; then
+
+    DISTRO_VERSION="$( (source /etc/os-release &>/dev/null; echo "$ID VERSION_ID") )"
+    DISTRO="${DISTRO_VERSION%% *}" # get our distro name
+    VERSION="${DISTRO_VERSION## *}" # get our version number
 
     # Detect fedora
-    grep -q "ID=fedora" /etc/os-release &> /dev/null
-    if [[ "x$?" == "x0" ]]; then
-        fedora_major_version=`grep VERSION_ID /etc/os-release |cut -f2 -d"="`
+    if [[ "$DISTRO" = "fedora" ]]; then
         distribution="fedora"
-    elif (grep -q "ID=arch" /etc/os-release &> /dev/null); then
+        fedora_major_version="$VERSION"
+    elif [[ "$DISTRO" = "arch" ]]; then
         distribution="archlinux"
-    elif [[ `which apt-get` != '' ]]; then
+    elif [[ "$DISTRO" = "ubuntu" ]]; then
         export DEBIAN_FRONTEND=noninteractive
         distribution="ubuntu"
-        ubuntu_major_version=`lsb_release -a 2>&1|grep Release|cut -f2 -d":"|sed '/^$/d;s/[[:blank:]]//g' |cut -f1 -d'.'`
-    elif [[ "$(grep 'ID="centos"' /etc/os-release 2>/dev/null)" != "" ]]; then
+        ubuntu_major_version="$VERSION"
+    elif [[ "$DISTRO" = "centos" ]]; then
         distribution="centos"
-        centos_major_version=`grep VERSION_ID /etc/os-release | cut -f2 -d"=" | sed 's/"//g'`
+        centos_major_version="$VERSION"
+    elif [[ "$DISTRO" = "centos" ]]; then
+        distribution="centos"
+        centos_major_version="$VERSION"
     else
         echo '==> Only Ubuntu, Fedora and CentOS distributions are supported.'
         exit
