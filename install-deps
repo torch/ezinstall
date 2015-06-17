@@ -76,10 +76,11 @@ if [[ `uname` == 'Darwin' ]]; then
 
 elif [[ "$(uname)" == 'Linux' ]]; then
 
-    DISTRO_VERSION="$( (source /etc/os-release &>/dev/null; echo "$ID VERSION_ID") )"
+    # this will get the required information without dirtying any env state
+    DIST_VERS="$((source /etc/os-release &>/dev/null; echo "$ID $VERSION_ID"))"
 
-    DISTRO="${DISTRO_VERSION%% *}" # get our distro name
-    VERSION="${DISTRO_VERSION## *}" # get our version number
+    DISTRO="${DIST_VERS%% *}" # get our distro name
+    VERSION="${DIST_VERS## *}" # get our version number
 
     # Detect fedora
     if [[ "$DISTRO" = "fedora" ]]; then
