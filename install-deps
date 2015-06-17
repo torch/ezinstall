@@ -99,7 +99,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
         centos_major_version="$VERSION"
     else
         echo '==> Only Ubuntu, Fedora, Archlinux and CentOS distributions are supported.'
-        exit
+        exit 1
     fi
 
     # Install dependencies for Torch:
