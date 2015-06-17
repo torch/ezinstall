@@ -18,24 +18,26 @@
 #
 ######################################################################
 
+# if a command returns a non-zero value, try again with sudo
 function DO_OR_SUDO(){ "$@" || sudo -E "$@" ; }
 
+# if a command returns a non-zero value, display a message to STDERR and bail
 function EXIT_ON_FAIL(){
     "$@"
-    RET=$?
-    if [[ $RET -ne 0 ]]; then
+    RET="$?"
+    if [[ "$RET" -ne 0 ]]; then
         echo "Error encountered when attempting to perform:" >&2
         echo "--> $* . Exiting." >&2
-        exit $RET
+        exit "$RET"
     fi
 }
 
 # Prefix:
-PREFIX=${PREFIX-/usr/local}
+PREFIX="${PREFIX-/usr/local}"
 echo "Installing Torch into: $PREFIX"
 
-if [[ `uname` == 'Linux' ]]; then
-    export CMAKE_LIBRARY_PATH=/opt/OpenBLAS/include:/opt/OpenBLAS/lib:$CMAKE_LIBRARY_PATH
+if [[ "$(uname)" == 'Linux' ]]; then
+    export CMAKE_LIBRARY_PATH="/opt/OpenBLAS/include:/opt/OpenBLAS/lib:$CMAKE_LIBRARY_PATH"
 fi
 
 # Build and install Torch7
@@ -51,10 +53,10 @@ EXIT_ON_FAIL make
 EXIT_ON_FAIL DO_OR_SUDO make install
 
 # check if we are on mac and fix RPATH for local install
-path_to_install_name_tool=$(which install_name_tool)
+path_to_install_name_tool="$(which install_name_tool)"
 if [[ -x "$path_to_install_name_tool" ]]
 then
-   install_name_tool -id ${PREFIX}/lib/libluajit.dylib ${PREFIX}/lib/libluajit.dylib
+   install_name_tool -id "${PREFIX}/lib/libluajit.dylib" "${PREFIX}/lib/libluajit.dylib"
 fi
 
 # Statuses:
@@ -83,32 +85,32 @@ if [[ -x "$path_to_nvcc" ]]; then
 fi
 
 # Install base packages:
-EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install sundown
-EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install cwrap
-EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install paths
-EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install torch
-EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install nn
-EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install dok
-EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install gnuplot
+EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install sundown
+EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install cwrap
+EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install paths
+EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install torch
+EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install nn
+EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install dok
+EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install gnuplot
 
 if [[ -n "$cutorch" ]]; then
-    DO_OR_SUDO $PREFIX/bin/luarocks install cutorch  || cutorch=failed
+    DO_OR_SUDO "$PREFIX/bin/luarocks" install cutorch || cutorch=failed
 fi
 
 if [[ -n "$cunn" ]]; then
-    DO_OR_SUDO $PREFIX/bin/luarocks install cunn  || cunn=failed
+    DO_OR_SUDO "$PREFIX/bin/luarocks" install cunn || cunn=failed
 fi
 
-EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install qtlua
-EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install qttorch
-EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install luafilesystem
-EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install penlight
-EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install sys
-EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install xlua
-EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install image
-EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install optim
-EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install lua-cjson
-EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install trepl
+EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install qtlua
+EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install qttorch
+EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install luafilesystem
+EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install penlight
+EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install sys
+EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install xlua
+EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install image
+EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install optim
+EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install lua-cjson
+EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install trepl
 
 # Done.
 echo ""
