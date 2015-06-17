@@ -18,6 +18,18 @@
 #
 ######################################################################
 
+function DO_OR_SUDO(){ "$@" || sudo -E "$@" ; }
+
+function EXIT_ON_FAIL(){
+    "$@"
+    RET=$?
+    if [[ $RET -ne 0 ]]; then
+        echo "Error encountered when attempting to perform:" >&2
+        echo "--> $* . Exiting." >&2
+        exit $RET
+    fi
+}
+
 # Prefix:
 PREFIX=${PREFIX-/usr/local}
 echo "Installing Torch into: $PREFIX"
@@ -33,15 +45,14 @@ cd luajit-rocks
 mkdir build; cd build
 git checkout master; git pull
 rm -f CMakeCache.txt
-cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_BUILD_TYPE=Release
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-make
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-make install || sudo -E make install
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+
+EXIT_ON_FAIL cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_BUILD_TYPE=Release
+EXIT_ON_FAIL make
+EXIT_ON_FAIL DO_OR_SUDO make install
+
 # check if we are on mac and fix RPATH for local install
 path_to_install_name_tool=$(which install_name_tool)
-if [ -x "$path_to_install_name_tool" ] 
+if [[ -x "$path_to_install_name_tool" ]]
 then
    install_name_tool -id ${PREFIX}/lib/libluajit.dylib ${PREFIX}/lib/libluajit.dylib
 fi
@@ -70,20 +81,6 @@ if [[ -x "$path_to_nvcc" ]]; then
     cutorch=ok
     cunn=ok
 fi
-
-function EXIT_ON_FAIL(){
-    "$@"
-    RET=$?
-    if [[ $RET -ne 0 ]]; then
-        echo "Error encountered when attempting to perform:" >&2
-        echo "--> $* . Exiting." >&2
-        exit $RET
-    fi
-}
-
-function DO_OR_SUDO(){
-    "$@" || sudo -E "$@"
-}
 
 # Install base packages:
 EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install sundown
