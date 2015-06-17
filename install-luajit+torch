@@ -65,28 +65,35 @@ optim=ok
 cjson=ok
 trepl=ok
 
-path_to_nvcc=$(which nvcc)
-if [ -x "$path_to_nvcc" ]
-then  
+path_to_nvcc="$(which nvcc)"
+if [[ -x "$path_to_nvcc" ]]; then  
     cutorch=ok
     cunn=ok
 fi
 
+function EXIT_ON_FAIL(){
+    "$@"
+    RET=$?
+    if [[ $RET -ne 0 ]]; then
+        echo "Error encountered when attempting to perform:" >&2
+        echo "--> $* . Exiting." >&2
+        exit $RET
+    fi
+}
+
+function DO_OR_SUDO(){
+    "$@" || sudo -E "$@"
+}
+
 # Install base packages:
-$PREFIX/bin/luarocks install sundown       ||  sudo -E $PREFIX/bin/luarocks install sundown
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install cwrap         ||  sudo -E $PREFIX/bin/luarocks install cwrap  
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install paths         ||  sudo -E $PREFIX/bin/luarocks install paths  
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install torch         ||  sudo -E $PREFIX/bin/luarocks install torch  
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install nn            ||  sudo -E $PREFIX/bin/luarocks install nn     
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install dok           ||  sudo -E $PREFIX/bin/luarocks install dok    
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install gnuplot       ||  sudo -E $PREFIX/bin/luarocks install gnuplot
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install sundown
+EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install cwrap
+EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install paths
+EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install torch
+EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install nn
+EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install dok
+EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install gnuplot
+
 [ -n "$cutorch" ] && \
 ($PREFIX/bin/luarocks install cutorch      ||  sudo -E $PREFIX/bin/luarocks install cutorch        ||   cutorch=failed )
 [ -n "$cunn" ] && \
