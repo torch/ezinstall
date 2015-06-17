@@ -77,6 +77,7 @@ if [[ `uname` == 'Darwin' ]]; then
 elif [[ "$(uname)" == 'Linux' ]]; then
 
     DISTRO_VERSION="$( (source /etc/os-release &>/dev/null; echo "$ID VERSION_ID") )"
+
     DISTRO="${DISTRO_VERSION%% *}" # get our distro name
     VERSION="${DISTRO_VERSION## *}" # get our version number
 
@@ -84,20 +85,20 @@ elif [[ "$(uname)" == 'Linux' ]]; then
     if [[ "$DISTRO" = "fedora" ]]; then
         distribution="fedora"
         fedora_major_version="$VERSION"
+    # Detect archlinux
     elif [[ "$DISTRO" = "arch" ]]; then
         distribution="archlinux"
+    # Detect Ubuntu
     elif [[ "$DISTRO" = "ubuntu" ]]; then
         export DEBIAN_FRONTEND=noninteractive
         distribution="ubuntu"
-        ubuntu_major_version="$VERSION"
-    elif [[ "$DISTRO" = "centos" ]]; then
-        distribution="centos"
-        centos_major_version="$VERSION"
+        ubuntu_major_version="${VERSION%%.*}"
+    # Detect CentOS
     elif [[ "$DISTRO" = "centos" ]]; then
         distribution="centos"
         centos_major_version="$VERSION"
     else
-        echo '==> Only Ubuntu, Fedora and CentOS distributions are supported.'
+        echo '==> Only Ubuntu, Fedora, Archlinux and CentOS distributions are supported.'
         exit
     fi
 
