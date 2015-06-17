@@ -94,10 +94,13 @@ EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install nn
 EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install dok
 EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install gnuplot
 
-[ -n "$cutorch" ] && \
-($PREFIX/bin/luarocks install cutorch      ||  sudo -E $PREFIX/bin/luarocks install cutorch        ||   cutorch=failed )
-[ -n "$cunn" ] && \
-($PREFIX/bin/luarocks install cunn         ||  sudo -E $PREFIX/bin/luarocks install cunn           ||   cunn=failed )
+if [[ -n "$cutorch" ]]; then
+    DO_OR_SUDO $PREFIX/bin/luarocks install cutorch  || cutorch=failed
+fi
+
+if [[ -n "$cunn" ]]; then
+    DO_OR_SUDO $PREFIX/bin/luarocks install cunn  || cunn=failed
+fi
 
 $PREFIX/bin/luarocks install qtlua         ||  sudo -E $PREFIX/bin/luarocks install qtlua  
 RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
