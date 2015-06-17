@@ -102,26 +102,16 @@ if [[ -n "$cunn" ]]; then
     DO_OR_SUDO $PREFIX/bin/luarocks install cunn  || cunn=failed
 fi
 
-$PREFIX/bin/luarocks install qtlua         ||  sudo -E $PREFIX/bin/luarocks install qtlua  
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install qttorch       ||  sudo -E $PREFIX/bin/luarocks install qttorch
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install luafilesystem ||  sudo -E $PREFIX/bin/luarocks install luafilesystem
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install penlight      ||  sudo -E $PREFIX/bin/luarocks install penlight 
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install sys           ||  sudo -E $PREFIX/bin/luarocks install sys      
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install xlua          ||  sudo -E $PREFIX/bin/luarocks install xlua     
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install image         ||  sudo -E $PREFIX/bin/luarocks install image    
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install optim         ||  sudo -E $PREFIX/bin/luarocks install optim    
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install lua-cjson     ||  sudo -E $PREFIX/bin/luarocks install lua-cjson
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
-$PREFIX/bin/luarocks install trepl         ||  sudo -E $PREFIX/bin/luarocks install trepl    
-RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install qtlua
+EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install qttorch
+EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install luafilesystem
+EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install penlight
+EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install sys
+EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install xlua
+EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install image
+EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install optim
+EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install lua-cjson
+EXIT_ON_FAIL DO_OR_SUDO $PREFIX/bin/luarocks install trepl
 
 # Done.
 echo ""
