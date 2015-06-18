@@ -181,7 +181,8 @@ elif [[ "$(uname)" == 'Linux' ]]; then
                                 ImageMagick GraphicsMagick-devel fftw-devel \
                                 sox-devel sox SDL2-devel zeromq3-devel \
                                 qt-devel qtwebkit-devel sox-plugins-freeworld \
-                                ipython
+                                epel-release
+            sudo yum install -y python-ipython
             install_openblas
         else
             echo "Only CentOS 7 is supported for now, aborting."
