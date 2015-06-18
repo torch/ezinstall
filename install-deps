@@ -121,6 +121,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
             sudo apt-get install -y nodejs
             sudo apt-get install -y npm
             sudo apt-get install -y libfftw3-dev sox libsox-dev libsox-fmt-all
+            sudo add-apt-repository ppa:jtaylor/ipython
         else
             sudo add-apt-repository ppa:chris-lea/zeromq
             sudo add-apt-repository ppa:chris-lea/node.js
