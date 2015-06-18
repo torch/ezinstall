@@ -124,7 +124,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
                       cmake libreadline-dev git-core libqt4-core libqt4-gui \
                       libqt4-dev libjpeg-dev libpng-dev ncurses-dev \
                       imagemagick libzmq3-dev gfortran unzip gnuplot \
-                      gnuplot-x11 )
+                      gnuplot-x11 ipython )
         sudo apt-get update
         if [[ $ubuntu_major_version == '14' ]]; then
             echo '==> Found Ubuntu version 14.xx, installing dependencies'
@@ -135,7 +135,6 @@ elif [[ "$(uname)" == 'Linux' ]]; then
             sudo apt-get install -y nodejs
             sudo apt-get install -y npm
             sudo apt-get install -y libfftw3-dev sox libsox-dev libsox-fmt-all
-            sudo apt-get install -y ipython3
         else
             sudo add-apt-repository ppa:chris-lea/zeromq
             sudo add-apt-repository ppa:chris-lea/node.js
