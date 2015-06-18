@@ -5,85 +5,17 @@
 # Install all dependencies for Torch7, then Torch7 itself.
 ######################################################################
 
-set -e
-
-function TPUT()
-{
-    #check for TTY and tput and redefine our existence based upon the results
-    if [[ -t 1 && -t 2 ]] && command -v "tput" >& /dev/null \
-               && tput setaf 1 >& /dev/null ; then
-        function TPUT()
-        {
-            tput "$@"
-        }
-    else
-        function TPUT() { : ; }
-    fi
-
-    #now call thy self
-    TPUT "$@"
-}
-
-function ERROR()
-{
-    TPUT setaf 1 >&2
-    while read; do
-        echo "ERROR: $REPLY"
-    done <<< "$@" >&2
-    TPUT sgr0 >&2
-}
-
-function WARN()
-{
-    TPUT setaf 3
-    while read; do
-        echo "WARN: $REPLY"
-    done <<< "$@"
-    TPUT sgr0
-}
-
-function INFO()
-{
-    TPUT setaf 2
-    while read; do
-        echo "INFO: $REPLY"
-    done <<< "$@"
-    TPUT sgr0
-}
-
-
-DEPS_URL="https://raw.githubusercontent.com/${_GITHUB_USER:-torch}/ezinstall/${_GITHUB_BRANCH:-master}/install-deps"
-TORCH_URL="https://raw.githubusercontent.com/${_GITHUB_USER:-torch}/ezinstall/${_GITHUB_BRANCH:-master}/install-luajit+torch"
-
-INFO "Preparing to install dependencies..."
-
-# Pull in dependencies
-if ! DEPS_SCRIPT="$( curl -s "$DEPS_URL" )" || \
-    [[ -z "$DEPS_SCRIPT" || "$DEPS_SCRIPT" = "Not Found" ]]; then
-    ERROR "Failed to curl $DEPS_URL. Exitting."
-    exit 1
-fi
-
 # Install dependencies
-if ! echo "$DEPS_SCRIPT" | bash ; then
-    WARN "At least one of the dependencies failed to install. Continuing anyway."
-else
-    INFO "Dependencies installed successfully."
+curl -s https://raw.githubusercontent.com/torch/ezinstall/master/install-deps | bash
+RET=$?; if [ $RET -ne 0 ]; then
+    echo " "
+    echo " "
+    echo "---------------------------------------------------"
+    echo "WARNING: One of the dependencies failed to install.";
+    echo "---------------------------------------------------"
+    echo " "
+    echo " "
 fi
-
-INFO "Preparing to install torch..."
-
-# Pull in torch
-if ! TORCH_SCRIPT="$( curl -s "$TORCH_URL" )" || \
-    [[ -z "$TORCH_SCRIPT" || "$TORCH_SCRIPT" = "Not Found" ]]; then
-    ERROR "Failed to curl $TORCH_URL. Exitting."
-fi
-
 # Install torch
-if ! echo "$TORCH_SCRIPT" | bash ; then
-    ERROR "Torch install returned an error. Installation may be incomplete."
-    exit 1
-else
-    INFO "Torch installed successfully."
-fi
-
+curl -s https://raw.githubusercontent.com/torch/ezinstall/master/install-luajit+torch | bash
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
