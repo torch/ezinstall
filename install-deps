@@ -76,11 +76,20 @@ if [[ `uname` == 'Darwin' ]]; then
 
 elif [[ "$(uname)" == 'Linux' ]]; then
 
-    # this will get the required information without dirtying any env state
-    DIST_VERS="$( ( . /etc/os-release &>/dev/null; echo "$ID $VERSION_ID") )"
-
-    DISTRO="${DIST_VERS%% *}" # get our distro name
-    VERSION="${DIST_VERS##* }" # get our version number
+    if [[ -r /etc/os-release ]]; then
+        # this will get the required information without dirtying any env state
+        DIST_VERS="$( ( . /etc/os-release &>/dev/null
+                        echo "$ID $VERSION_ID") )"
+        DISTRO="${DIST_VERS%% *}" # get our distro name
+        VERSION="${DIST_VERS##* }" # get our version number
+    elif [[ -r /etc/redhat-release ]]; then
+        DIST_VERS=( $( cat /etc/redhat-release ) ) # make the file an array
+        DISTRO="${DIST_VERS[0],,}" # get the first element and get lcase
+        VERS="${DIST_VERS[2]}" # get the third element (version)
+    else # well, I'm out of ideas for now
+        echo '==> Failed to determine distro and version.'
+        exit 1
+    fi
 
     # Detect fedora
     if [[ "$DISTRO" = "fedora" ]]; then
