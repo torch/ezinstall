@@ -80,7 +80,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
     DIST_VERS="$( ( . /etc/os-release &>/dev/null; echo "$ID $VERSION_ID") )"
 
     DISTRO="${DIST_VERS%% *}" # get our distro name
-    VERSION="${DIST_VERS## *}" # get our version number
+    VERSION="${DIST_VERS##* }" # get our version number
 
     # Detect fedora
     if [[ "$DISTRO" = "fedora" ]]; then
