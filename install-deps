@@ -74,79 +74,60 @@ if [[ `uname` == 'Darwin' ]]; then
     brew remove gnuplot
     brew install gnuplot --with-wxmac --with-cairo --with-pdflib-lite --with-x11 --without-lua
 
-elif [[ `uname` == 'Linux' ]]; then
+elif [[ "$(uname)" == 'Linux' ]]; then
+
+    # this will get the required information without dirtying any env state
+    DIST_VERS="$( ( . /etc/os-release &>/dev/null; echo "$ID $VERSION_ID") )"
+
+    DISTRO="${DIST_VERS%% *}" # get our distro name
+    VERSION="${DIST_VERS##* }" # get our version number
 
     # Detect fedora
-    grep -q "ID=fedora" /etc/os-release &> /dev/null
-    if [[ "x$?" == "x0" ]]; then
-        fedora_major_version=`grep VERSION_ID /etc/os-release |cut -f2 -d"="`
+    if [[ "$DISTRO" = "fedora" ]]; then
         distribution="fedora"
-    elif (grep -q "ID=arch" /etc/os-release &> /dev/null); then
+        fedora_major_version="$VERSION"
+    # Detect archlinux
+    elif [[ "$DISTRO" = "arch" ]]; then
         distribution="archlinux"
-    elif [[ `which apt-get` != '' ]]; then
+    # Detect Ubuntu
+    elif [[ "$DISTRO" = "ubuntu" ]]; then
         export DEBIAN_FRONTEND=noninteractive
         distribution="ubuntu"
-        ubuntu_major_version=`lsb_release -a 2>&1|grep Release|cut -f2 -d":"|sed '/^$/d;s/[[:blank:]]//g' |cut -f1 -d'.'`
-    elif [[ "$(grep 'ID="centos"' /etc/os-release 2>/dev/null)" != "" ]]; then
+        ubuntu_major_version="${VERSION%%.*}"
+    # Detect CentOS
+    elif [[ "$DISTRO" = "centos" ]]; then
         distribution="centos"
-        centos_major_version=`grep VERSION_ID /etc/os-release | cut -f2 -d"=" | sed 's/"//g'`
+        centos_major_version="$VERSION"
     else
-        echo '==> Only Ubuntu, Fedora and CentOS distributions are supported.'
-        exit
+        echo '==> Only Ubuntu, Fedora, Archlinux and CentOS distributions are supported.'
+        exit 1
     fi
 
     # Install dependencies for Torch:
     if [[ $distribution == 'ubuntu' ]]; then
+        declare -a target_pkgs
+        target_pkgs=( python-software-properties build-essential gcc g++ curl \
+                      cmake libreadline-dev git-core libqt4-core libqt4-gui \
+                      libqt4-dev libjpeg-dev libpng-dev ncurses-dev \
+                      imagemagick libzmq3-dev gfortran unzip gnuplot \
+                      gnuplot-x11 ipython )
+        sudo apt-get update
         if [[ $ubuntu_major_version == '14' ]]; then
             echo '==> Found Ubuntu version 14.xx, installing dependencies'
-            sudo apt-get update
-            sudo apt-get -y install python-software-properties
             sudo apt-get -y install software-properties-common
             sudo apt-get update
-            sudo apt-get install -y build-essential
-            sudo apt-get install -y gcc g++
-            sudo apt-get install -y cmake
-            sudo apt-get install -y curl
-            sudo apt-get install -y libreadline-dev
-            sudo apt-get install -y git-core
-            sudo apt-get install -y libqt4-core libqt4-gui libqt4-dev
-            sudo apt-get install -y libjpeg-dev
-            sudo apt-get install -y libpng-dev
-            sudo apt-get install -y ncurses-dev
-            sudo apt-get install -y imagemagick
-            sudo apt-get install -y libzmq3-dev
-            sudo apt-get install -y gfortran
-            sudo apt-get install -y unzip
-            sudo apt-get install -y gnuplot
-            sudo apt-get install -y gnuplot-x11
             sudo apt-get install -y libsdl2-dev
             sudo apt-get install -y libgraphicsmagick1-dev
             sudo apt-get install -y nodejs
             sudo apt-get install -y npm
             sudo apt-get install -y libfftw3-dev sox libsox-dev libsox-fmt-all
-            sudo apt-get update
+            sudo add-apt-repository ppa:jtaylor/ipython
         else
-            sudo apt-get install -y python-software-properties
             sudo add-apt-repository ppa:chris-lea/zeromq
             sudo add-apt-repository ppa:chris-lea/node.js
-            sudo apt-get update
-            sudo apt-get install -y build-essential
-            sudo apt-get install -y gcc g++
-            sudo apt-get install -y cmake
-            sudo apt-get install -y curl
-            sudo apt-get install -y libreadline-dev
-            sudo apt-get install -y git-core
-            sudo apt-get install -y libqt4-core libqt4-gui libqt4-dev
-            sudo apt-get install -y libjpeg-dev
-            sudo apt-get install -y libpng-dev
-            sudo apt-get install -y ncurses-dev
-            sudo apt-get install -y imagemagick
-            sudo apt-get install -y libzmq3-dev
-            sudo apt-get install -y gfortran
-            sudo apt-get install -y unzip
-            sudo apt-get install -y gnuplot
-            sudo apt-get install -y gnuplot-x11
         fi
+        sudo apt-get update
+        sudo apt-get install -y "${target_pkgs[@]}"
 
         install_openblas
 
@@ -186,7 +167,8 @@ elif [[ `uname` == 'Linux' ]]; then
                                 nodejs npm libjpeg-turbo-devel libpng-devel \
                                 ImageMagick GraphicsMagick-devel fftw-devel \
                                 sox-devel sox SDL2-devel zeromq3-devel \
-                                qt-devel qtwebkit-devel sox-plugins-freeworld
+                                qt-devel qtwebkit-devel sox-plugins-freeworld \
+                                ipython
             install_openblas
         else
             echo "Only Fedora 20 is supported for now, aborting."
@@ -199,7 +181,9 @@ elif [[ `uname` == 'Linux' ]]; then
                                 nodejs npm libjpeg-turbo-devel libpng-devel \
                                 ImageMagick GraphicsMagick-devel fftw-devel \
                                 sox-devel sox SDL2-devel zeromq3-devel \
-                                qt-devel qtwebkit-devel sox-plugins-freeworld
+                                qt-devel qtwebkit-devel sox-plugins-freeworld \
+                                epel-release
+            sudo yum install -y python-ipython
             install_openblas
         else
             echo "Only CentOS 7 is supported for now, aborting."
