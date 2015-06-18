@@ -124,7 +124,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
                       cmake libreadline-dev git-core libqt4-core libqt4-gui \
                       libqt4-dev libjpeg-dev libpng-dev ncurses-dev \
                       imagemagick libzmq3-dev gfortran unzip gnuplot \
-                      gnuplot-x11 )
+                      gnuplot-x11 ipython )
         sudo apt-get update
         if [[ $ubuntu_major_version == '14' ]]; then
             echo '==> Found Ubuntu version 14.xx, installing dependencies'
@@ -180,7 +180,8 @@ elif [[ "$(uname)" == 'Linux' ]]; then
                                 nodejs npm libjpeg-turbo-devel libpng-devel \
                                 ImageMagick GraphicsMagick-devel fftw-devel \
                                 sox-devel sox SDL2-devel zeromq3-devel \
-                                qt-devel qtwebkit-devel sox-plugins-freeworld
+                                qt-devel qtwebkit-devel sox-plugins-freeworld \
+                                ipython
             install_openblas
         else
             echo "Only Fedora 20 is supported for now, aborting."
@@ -193,7 +194,8 @@ elif [[ "$(uname)" == 'Linux' ]]; then
                                 nodejs npm libjpeg-turbo-devel libpng-devel \
                                 ImageMagick GraphicsMagick-devel fftw-devel \
                                 sox-devel sox SDL2-devel zeromq3-devel \
-                                qt-devel qtwebkit-devel sox-plugins-freeworld
+                                qt-devel qtwebkit-devel sox-plugins-freeworld \
+                                ipython
             install_openblas
         else
             echo "Only CentOS 7 is supported for now, aborting."
