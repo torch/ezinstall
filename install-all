@@ -51,14 +51,16 @@ function INFO()
     TPUT sgr0
 }
 
-DEPS_URL="https://raw.githubusercontent.com/torch/ezinstall/master/install-deps"
-TORCH_URL="https://raw.githubusercontent.com/torch/ezinstall/master/install-luajit+torch"
+
+DEPS_URL="https://raw.githubusercontent.com/${_GITHUB_USER:-torch}/ezinstall/${_GITHUB_BRANCH:-master}/install-deps"
+TORCH_URL="https://raw.githubusercontent.com/${_GITHUB_USER:-torch}/ezinstall/${_GITHUB_BRANCH:-master}/install-luajit+torch"
 
 INFO "Preparing to install dependencies..."
 
 # Pull in dependencies
-if ! DEPS_SCRIPT="$( curl -s "$DEPS_URL" )"; then
-    ERROR "Failed to curl $DEPS_URL . Exitting."
+if ! DEPS_SCRIPT="$( curl -s "$DEPS_URL" )" || \
+    [[ -z "$DEPS_SCRIPT" || "$DEPS_SCRIPT" = "Not Found" ]]; then
+    ERROR "Failed to curl $DEPS_URL. Exitting."
     exit 1
 fi
 
@@ -72,8 +74,9 @@ fi
 INFO "Preparing to install torch..."
 
 # Pull in torch
-if ! TORCH_SCRIPT="$( curl -s "$TORCH_URL" )"; then
-    ERROR "Failed to curl $TORCH_URL . Exitting."
+if ! TORCH_SCRIPT="$( curl -s "$TORCH_URL" )" || \
+    [[ -z "$TORCH_SCRIPT" || "$TORCH_SCRIPT" = "Not Found" ]]; then
+    ERROR "Failed to curl $TORCH_URL. Exitting."
 fi
 
 # Install torch
