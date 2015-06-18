@@ -18,26 +18,12 @@
 #
 ######################################################################
 
-# if a command returns a non-zero value, try again with sudo
-function DO_OR_SUDO(){ "$@" || sudo -E "$@" ; }
-
-# if a command returns a non-zero value, display a message to STDERR and bail
-function EXIT_ON_FAIL(){
-    "$@"
-    RET="$?"
-    if [[ "$RET" -ne 0 ]]; then
-        echo "Error encountered when attempting to perform:" >&2
-        echo "--> $* . Exiting." >&2
-        exit "$RET"
-    fi
-}
-
 # Prefix:
-PREFIX="${PREFIX-/usr/local}"
+PREFIX=${PREFIX-/usr/local}
 echo "Installing Torch into: $PREFIX"
 
-if [[ "$(uname)" == 'Linux' ]]; then
-    export CMAKE_LIBRARY_PATH="/opt/OpenBLAS/include:/opt/OpenBLAS/lib:$CMAKE_LIBRARY_PATH"
+if [[ `uname` == 'Linux' ]]; then
+    export CMAKE_LIBRARY_PATH=/opt/OpenBLAS/include:/opt/OpenBLAS/lib:$CMAKE_LIBRARY_PATH
 fi
 
 # Build and install Torch7
@@ -47,16 +33,17 @@ cd luajit-rocks
 mkdir build; cd build
 git checkout master; git pull
 rm -f CMakeCache.txt
-
-EXIT_ON_FAIL cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_BUILD_TYPE=Release
-EXIT_ON_FAIL make
-EXIT_ON_FAIL DO_OR_SUDO make install
-
+cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_BUILD_TYPE=Release
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+make
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+make install || sudo -E make install
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 # check if we are on mac and fix RPATH for local install
-path_to_install_name_tool="$(which install_name_tool)"
-if [[ -x "$path_to_install_name_tool" ]]
+path_to_install_name_tool=$(which install_name_tool)
+if [ -x "$path_to_install_name_tool" ] 
 then
-   install_name_tool -id "${PREFIX}/lib/libluajit.dylib" "${PREFIX}/lib/libluajit.dylib"
+   install_name_tool -id ${PREFIX}/lib/libluajit.dylib ${PREFIX}/lib/libluajit.dylib
 fi
 
 # Statuses:
@@ -78,39 +65,53 @@ optim=ok
 cjson=ok
 trepl=ok
 
-path_to_nvcc="$(which nvcc)"
-if [[ -x "$path_to_nvcc" ]]; then  
+path_to_nvcc=$(which nvcc)
+if [ -x "$path_to_nvcc" ]
+then  
     cutorch=ok
     cunn=ok
 fi
 
 # Install base packages:
-EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install sundown
-EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install cwrap
-EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install paths
-EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install torch
-EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install nn
-EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install dok
-EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install gnuplot
+$PREFIX/bin/luarocks install sundown       ||  sudo -E $PREFIX/bin/luarocks install sundown
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install cwrap         ||  sudo -E $PREFIX/bin/luarocks install cwrap  
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install paths         ||  sudo -E $PREFIX/bin/luarocks install paths  
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install torch         ||  sudo -E $PREFIX/bin/luarocks install torch  
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install nn            ||  sudo -E $PREFIX/bin/luarocks install nn     
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install dok           ||  sudo -E $PREFIX/bin/luarocks install dok    
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install gnuplot       ||  sudo -E $PREFIX/bin/luarocks install gnuplot
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+[ -n "$cutorch" ] && \
+($PREFIX/bin/luarocks install cutorch      ||  sudo -E $PREFIX/bin/luarocks install cutorch        ||   cutorch=failed )
+[ -n "$cunn" ] && \
+($PREFIX/bin/luarocks install cunn         ||  sudo -E $PREFIX/bin/luarocks install cunn           ||   cunn=failed )
 
-if [[ -n "$cutorch" ]]; then
-    DO_OR_SUDO "$PREFIX/bin/luarocks" install cutorch || cutorch=failed
-fi
-
-if [[ -n "$cunn" ]]; then
-    DO_OR_SUDO "$PREFIX/bin/luarocks" install cunn || cunn=failed
-fi
-
-EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install qtlua
-EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install qttorch
-EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install luafilesystem
-EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install penlight
-EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install sys
-EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install xlua
-EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install image
-EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install optim
-EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install lua-cjson
-EXIT_ON_FAIL DO_OR_SUDO "$PREFIX/bin/luarocks" install trepl
+$PREFIX/bin/luarocks install qtlua         ||  sudo -E $PREFIX/bin/luarocks install qtlua  
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install qttorch       ||  sudo -E $PREFIX/bin/luarocks install qttorch
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install luafilesystem ||  sudo -E $PREFIX/bin/luarocks install luafilesystem
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install penlight      ||  sudo -E $PREFIX/bin/luarocks install penlight 
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install sys           ||  sudo -E $PREFIX/bin/luarocks install sys      
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install xlua          ||  sudo -E $PREFIX/bin/luarocks install xlua     
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install image         ||  sudo -E $PREFIX/bin/luarocks install image    
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install optim         ||  sudo -E $PREFIX/bin/luarocks install optim    
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install lua-cjson     ||  sudo -E $PREFIX/bin/luarocks install lua-cjson
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
+$PREFIX/bin/luarocks install trepl         ||  sudo -E $PREFIX/bin/luarocks install trepl    
+RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 
 # Done.
 echo ""
