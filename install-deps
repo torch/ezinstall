@@ -130,12 +130,10 @@ elif [[ "$(uname)" == 'Linux' ]]; then
         sudo apt-get install -y python-software-properties 
         if [[ $ubuntu_major_version == '14' ]]; then
             echo '==> Found Ubuntu version 14.xx, installing dependencies'
-            sudo apt-get install -y software-properties-common
-            sudo apt-get install -y libsdl2-dev
-            sudo apt-get install -y libgraphicsmagick1-dev
-            sudo apt-get install -y nodejs
-            sudo apt-get install -y npm
-            sudo apt-get install -y libfftw3-dev sox libsox-dev libsox-fmt-all
+            sudo apt-get install -y software-properties-common libsdl2-dev \
+                libgraphicsmagick1-dev nodejs npm libfftw3-dev sox libsox-dev \
+                libsox-fmt-all
+
             sudo add-apt-repository ppa:jtaylor/ipython
         else
             sudo add-apt-repository ppa:chris-lea/zeromq
