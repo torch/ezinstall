@@ -56,7 +56,7 @@ if [[ `uname` == 'Darwin' ]]; then
     # GCC?
     if [[ `which gcc` == '' ]]; then
         echo "MacOS doesn't come with GCC: please install XCode and the command line tools."
-        exit
+        exit 1
     fi
 
     # Install Homebrew (pkg manager):
@@ -114,7 +114,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
         centos_major_version="$VERSION"
     else
         echo '==> Only Ubuntu, Fedora, Archlinux and CentOS distributions are supported.'
-        exit
+        exit 1
     fi
 
     # Install dependencies for Torch:
@@ -185,7 +185,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
             install_openblas
         else
             echo "Only Fedora 20 is supported for now, aborting."
-            exit
+            exit 1
         fi
     elif [[ $distribution == 'centos' ]]; then
         if [[ $centos_major_version == '7' ]]; then
@@ -200,14 +200,14 @@ elif [[ "$(uname)" == 'Linux' ]]; then
             install_openblas
         else
             echo "Only CentOS 7 is supported for now, aborting."
-            exit
+            exit 1
         fi
     fi
 
 else
     # Unsupported
     echo '==> platform not supported, aborting'
-    exit
+    exit 1
 fi
 
 ipython_exists=$(command -v ipython)
