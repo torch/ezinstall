@@ -74,24 +74,46 @@ if [[ `uname` == 'Darwin' ]]; then
     brew remove gnuplot
     brew install gnuplot --with-wxmac --with-cairo --with-pdflib-lite --with-x11 --without-lua
 
-elif [[ `uname` == 'Linux' ]]; then
+elif [[ "$(uname)" == 'Linux' ]]; then
+
+    if [[ -r /etc/os-release ]]; then
+        # this will get the required information without dirtying any env state
+        DIST_VERS="$( ( . /etc/os-release &>/dev/null
+                        echo "$ID $VERSION_ID") )"
+        DISTRO="${DIST_VERS%% *}" # get our distro name
+        VERSION="${DIST_VERS##* }" # get our version number
+    elif [[ -r /etc/redhat-release ]]; then
+        DIST_VERS=( $( cat /etc/redhat-release ) ) # make the file an array
+        DISTRO="${DIST_VERS[0],,}" # get the first element and get lcase
+        VERS="${DIST_VERS[2]}" # get the third element (version)
+    elif [[ -r /etc/lsb-release ]]; then
+        DIST_VERS="$( ( . /etc/lsb-release &>/dev/null
+                        echo "${DISTRIB_ID,,} $DISTRIB_RELEASE") )"
+        DISTRO="${DIST_VERS%% *}" # get our distro name
+        VERSION="${DIST_VERS##* }" # get our version number
+    else # well, I'm out of ideas for now
+        echo '==> Failed to determine distro and version.'
+        exit 1
+    fi
 
     # Detect fedora
-    grep -q "ID=fedora" /etc/os-release &> /dev/null
-    if [[ "x$?" == "x0" ]]; then
-        fedora_major_version=`grep VERSION_ID /etc/os-release |cut -f2 -d"="`
+    if [[ "$DISTRO" = "fedora" ]]; then
         distribution="fedora"
-    elif (grep -q "ID=arch" /etc/os-release &> /dev/null); then
+        fedora_major_version="$VERSION"
+    # Detect archlinux
+    elif [[ "$DISTRO" = "arch" ]]; then
         distribution="archlinux"
-    elif [[ `which apt-get` != '' ]]; then
+    # Detect Ubuntu
+    elif [[ "$DISTRO" = "ubuntu" ]]; then
         export DEBIAN_FRONTEND=noninteractive
         distribution="ubuntu"
-        ubuntu_major_version=`lsb_release -a 2>&1|grep Release|cut -f2 -d":"|sed '/^$/d;s/[[:blank:]]//g' |cut -f1 -d'.'`
-    elif [[ "$(grep 'ID="centos"' /etc/os-release 2>/dev/null)" != "" ]]; then
+        ubuntu_major_version="${VERSION%%.*}"
+    # Detect CentOS
+    elif [[ "$DISTRO" = "centos" ]]; then
         distribution="centos"
-        centos_major_version=`grep VERSION_ID /etc/os-release | cut -f2 -d"=" | sed 's/"//g'`
+        centos_major_version="$VERSION"
     else
-        echo '==> Only Ubuntu, Fedora and CentOS distributions are supported.'
+        echo '==> Only Ubuntu, Fedora, Archlinux and CentOS distributions are supported.'
         exit
     fi
 
