@@ -120,16 +120,17 @@ elif [[ "$(uname)" == 'Linux' ]]; then
     # Install dependencies for Torch:
     if [[ $distribution == 'ubuntu' ]]; then
         declare -a target_pkgs
-        target_pkgs=( python-software-properties build-essential gcc g++ curl \
+        target_pkgs=( build-essential gcc g++ curl \
                       cmake libreadline-dev git-core libqt4-core libqt4-gui \
                       libqt4-dev libjpeg-dev libpng-dev ncurses-dev \
                       imagemagick libzmq3-dev gfortran unzip gnuplot \
                       gnuplot-x11 ipython )
         sudo apt-get update
+        # python-software-properties is required for apt-add-repository
+        sudo apt-get install -y python-software-properties 
         if [[ $ubuntu_major_version == '14' ]]; then
             echo '==> Found Ubuntu version 14.xx, installing dependencies'
-            sudo apt-get -y install software-properties-common
-            sudo apt-get update
+            sudo apt-get install -y software-properties-common
             sudo apt-get install -y libsdl2-dev
             sudo apt-get install -y libgraphicsmagick1-dev
             sudo apt-get install -y nodejs
