@@ -189,13 +189,13 @@ elif [[ "$(uname)" == 'Linux' ]]; then
         fi
     elif [[ $distribution == 'centos' ]]; then
         if [[ $centos_major_version == '7' ]]; then
+            sudo yum install -y epel-release # a lot of things live in EPEL
             sudo yum install -y cmake curl readline-devel ncurses-devel \
                                 gcc-c++ gcc-gfortran git gnuplot unzip \
                                 nodejs npm libjpeg-turbo-devel libpng-devel \
                                 ImageMagick GraphicsMagick-devel fftw-devel \
                                 sox-devel sox zeromq3-devel \
-                                qt-devel qtwebkit-devel sox-plugins-freeworld \
-                                epel-release
+                                qt-devel qtwebkit-devel sox-plugins-freeworld
             sudo yum install -y python-ipython
             install_openblas
         else
