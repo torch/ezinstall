@@ -130,7 +130,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
         sudo apt-get install -y python-software-properties 
         if [[ $ubuntu_major_version == '14' ]]; then
             echo '==> Found Ubuntu version 14.xx, installing dependencies'
-            sudo apt-get install -y software-properties-common libsdl2-dev \
+            sudo apt-get install -y software-properties-common \
                 libgraphicsmagick1-dev nodejs npm libfftw3-dev sox libsox-dev \
                 libsox-fmt-all
 
@@ -150,7 +150,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
         sudo pacman -S --quiet --noconfirm \
             cmake curl readline ncurses git \
             gnuplot unzip libjpeg-turbo libpng libpng \
-            imagemagick graphicsmagick fftw sox sdl2 zeromq \
+            imagemagick graphicsmagick fftw sox zeromq \
             qt4 qtwebkit
         # if GCC is not installed yet
         (pacman -Qi gcc &>/dev/null) || \
@@ -179,7 +179,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
                                 gcc-c++ gcc-gfortran git gnuplot unzip \
                                 nodejs npm libjpeg-turbo-devel libpng-devel \
                                 ImageMagick GraphicsMagick-devel fftw-devel \
-                                sox-devel sox SDL2-devel zeromq3-devel \
+                                sox-devel sox zeromq3-devel \
                                 qt-devel qtwebkit-devel sox-plugins-freeworld \
                                 ipython
             install_openblas
@@ -193,7 +193,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
                                 gcc-c++ gcc-gfortran git gnuplot unzip \
                                 nodejs npm libjpeg-turbo-devel libpng-devel \
                                 ImageMagick GraphicsMagick-devel fftw-devel \
-                                sox-devel sox SDL2-devel zeromq3-devel \
+                                sox-devel sox zeromq3-devel \
                                 qt-devel qtwebkit-devel sox-plugins-freeworld \
                                 epel-release
             sudo yum install -y python-ipython
