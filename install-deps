@@ -183,8 +183,18 @@ elif [[ "$(uname)" == 'Linux' ]]; then
                                 qt-devel qtwebkit-devel sox-plugins-freeworld \
                                 ipython
             install_openblas
+        elif [[ $fedora_major_version == '22' ]]; then
+            #using dnf - since yum has been deprecated
+            #sox-plugins-freeworld is not yet available in repos for F22
+            sudo dnf install -y cmake curl readline-devel ncurses-devel \
+            			gcc-c++ gcc-gfortran git gnuplot unzip \
+            			nodejs npm libjpeg-turbo-devel libpng-devel \
+            			ImageMagick GraphicsMagick-devel fftw-devel \
+            			sox-devel sox qt-devel qtwebkit-devel \
+            			python-ipython czmq czmq-devel
+            install_openblas
         else
-            echo "Only Fedora 20 is supported for now, aborting."
+            echo "Only Fedora 20 or Fedora 22 is supported for now, aborting."
             exit 1
         fi
     elif [[ $distribution == 'centos' ]]; then
