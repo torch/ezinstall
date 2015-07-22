@@ -17,6 +17,7 @@
 #    > require 'json'
 #
 ######################################################################
+{
 
 # Prefix:
 PREFIX=${PREFIX-/usr/local}
@@ -155,3 +156,5 @@ echo "    - optim     : " $optim
 echo "    - cjson     : " $cjson
 echo "    - trepl     : " $trepl
 echo ""
+
+}
