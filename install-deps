@@ -3,6 +3,7 @@
 ######################################################################
 # This script installs required dependencies for Torch7
 ######################################################################
+{
 
 install_openblas() {
     # Get and build OpenBlas (Torch is much better with a decent Blas)
@@ -231,3 +232,4 @@ if [[ $ipython_exists ]]; then {
 # Done.
 echo "==> Torch7's dependencies have been installed"
 
+}

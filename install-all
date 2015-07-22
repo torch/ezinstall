@@ -4,6 +4,7 @@
 # Complete install:
 # Install all dependencies for Torch7, then Torch7 itself.
 ######################################################################
+{
 
 set -e
 
@@ -87,3 +88,4 @@ else
     INFO "Torch installed successfully."
 fi
 
+}
