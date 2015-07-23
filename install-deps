@@ -36,7 +36,7 @@ install_openblas_AUR() {
     makepkg -csi
 }
 
-chekupdates_archlinux() {
+checkupdates_archlinux() {
     # checks if archlinux is up to date
     if [[ -n $(checkupdates) ]]; then
         echo "It seems that your system is not up to date."
@@ -44,9 +44,8 @@ chekupdates_archlinux() {
         read -p "Continue installation ? [y/N] " yn
             case $yn in
                 Y|y ) echo "Continuing...";;
-                N|n ) ;;
                 * ) echo "Installation aborted."
-                    echo "Relauch this script after updating your system with 'pacman -Syu'."
+                    echo "Relaunch this script after updating your system with 'pacman -Syu'."
                     exit 0
             esac
     fi
@@ -147,12 +146,12 @@ elif [[ "$(uname)" == 'Linux' ]]; then
 
     elif [[ $distribution == 'archlinux' ]]; then
         echo "Archlinux installation"
-        chekupdates_archlinux
+        checkupdates_archlinux
         sudo pacman -S --quiet --noconfirm --needed \
             cmake curl readline ncurses git \
             gnuplot unzip libjpeg-turbo libpng libpng \
             imagemagick graphicsmagick fftw sox zeromq \
-            qt4 qtwebkit
+            qt4 qtwebkit || exit 1
         # if GCC is not installed yet
         (pacman -Qi gcc &>/dev/null) || \
             (pacman -Qi gcc-multilib &>/dev/null) ;
@@ -163,7 +162,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
             else
                 gcc_package="gcc"
             fi
-            sudo pacman -S --quiet --noconfirm ${gcc_package} gcc-fortran
+            sudo pacman -S --quiet --noconfirm ${gcc_package} gcc-fortran || exit 1
         fi
         # if openblas is not installed yet
         (pacman -Qs openblas &> /dev/null) ;
