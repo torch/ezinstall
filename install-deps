@@ -32,8 +32,13 @@ install_openblas_AUR() {
     # build and install an OpenBLAS package for Archlinux
     cd /tmp && \
     curl https://aur.archlinux.org/packages/op/openblas-lapack/openblas-lapack.tar.gz | tar zxf - && \
-    cd openblas-lapack && \
-    makepkg -csi
+    cd openblas-lapack
+    makepkg -csi --noconfirm
+    RET=$?;
+    if [ $RET -ne 0 ]; then
+        echo "Error. OpenBLAS could not be installed";
+        exit $RET;
+    fi
 }
 
 checkupdates_archlinux() {
@@ -152,22 +157,17 @@ elif [[ "$(uname)" == 'Linux' ]]; then
             gnuplot unzip libjpeg-turbo libpng libpng \
             imagemagick graphicsmagick fftw sox zeromq \
             ipython qt4 qtwebkit || exit 1
-        # if GCC is not installed yet
-        (pacman -Qi gcc &>/dev/null) || \
-            (pacman -Qi gcc-multilib &>/dev/null) ;
-        gcc_installed=$?
-        if [[ $gcc_installed -ne 0 ]]; then
-            if [[ "machine:`uname -m`" == "machine:x86_64" ]]; then
-                gcc_package="gcc-multilib"
-            else
-                gcc_package="gcc"
-            fi
-            sudo pacman -S --quiet --noconfirm ${gcc_package} gcc-fortran || exit 1
+        pacman -Sl multilib &>/dev/null
+        if [[ $? -ne 0 ]]; then
+            gcc_package="gcc"
+        else
+            gcc_package="gcc-multilib"
         fi
+        sudo pacman -S --quiet --noconfirm --needed \
+            ${gcc_package} gcc-fortran || exit 1
         # if openblas is not installed yet
-        (pacman -Qs openblas &> /dev/null) ;
-        openblas_installed=$?
-        if [[ $openblas_installed -ne 0 ]]; then
+        pacman -Qs openblas &> /dev/null
+        if [[ $? -ne 0 ]]; then
             install_openblas_AUR
         else
             echo "OpenBLAS is already installed"
