@@ -1,6 +1,4 @@
-# Torch (easy) install
-
-This is just an easy install script for Torch7.
+# [DEPRECEATED REPOSITORY, DO NOT USE]
 
 # For those new, please use the instructions from our website to install torch: http://torch.ch/docs/getting-started.html#_
 
