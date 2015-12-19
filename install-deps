@@ -149,6 +149,14 @@ elif [[ "$(uname)" == 'Linux' ]]; then
             sudo add-apt-repository -y ppa:chris-lea/zeromq
             sudo add-apt-repository -y ppa:chris-lea/node.js
         fi
+
+        gcc_major_version=$(gcc --version | grep ^gcc | awk '{print $4}' | \
+                            cut -c 1)
+        if [[ $gcc_major_version == '5' ]]; then
+            echo '==> Found GCC 5, installing GCC 4.9.'
+            sudo apt-get install -y gcc-4.9 libgfortran-4.9-dev g++-4.9
+        fi
+
         sudo apt-get update
         sudo apt-get install -y "${target_pkgs[@]}"
 
