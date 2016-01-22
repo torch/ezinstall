@@ -15,13 +15,13 @@ install_openblas() {
     else
         make NO_AFFINITY=1 USE_OPENMP=1
     fi
-    RET=$?; 
+    RET=$?;
     if [ $RET -ne 0 ]; then
         echo "Error. OpenBLAS could not be compiled";
         exit $RET;
     fi
     sudo make install
-    RET=$?; 
+    RET=$?;
     if [ $RET -ne 0 ]; then
         echo "Error. OpenBLAS could not be installed";
         exit $RET;
@@ -122,6 +122,10 @@ elif [[ "$(uname)" == 'Linux' ]]; then
     elif [[ "$DISTRO" = "centos" ]]; then
         distribution="centos"
         centos_major_version="$VERSION"
+    # Detect AWS
+    elif [[ "$DISTRO" = "amzn" ]]; then
+        distribution="amzn"
+        amzn_major_version="$VERSION"
     else
         echo '==> Only Ubuntu, elementary OS, Fedora, Archlinux and CentOS distributions are supported.'
         exit 1
@@ -137,7 +141,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
                       gnuplot-x11 ipython )
         sudo apt-get update
         # python-software-properties is required for apt-add-repository
-        sudo apt-get install -y python-software-properties 
+        sudo apt-get install -y python-software-properties
         if [[ $ubuntu_major_version == '14' ]]; then
             echo '==> Found Ubuntu version 14.xx, installing dependencies'
             sudo apt-get install -y software-properties-common \
@@ -251,6 +255,15 @@ elif [[ "$(uname)" == 'Linux' ]]; then
             echo "Only CentOS 7 is supported for now, aborting."
             exit 1
         fi
+    elif [[ $distribution == 'amzn' ]]; then
+        sudo yum install -y cmake curl readline-devel ncurses-devel \
+                            gcc-c++ gcc-gfortran git gnuplot unzip \
+                            nodejs npm libjpeg-turbo-devel libpng-devel \
+                            ImageMagick GraphicsMagick-devel fftw-devel \
+                            sox-devel sox zeromq3-devel \
+                            qt-devel qtwebkit-devel sox-plugins-freeworld \
+                            ipython libgfortran
+        install_openblas
     fi
 
 else
