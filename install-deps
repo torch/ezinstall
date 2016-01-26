@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 ######################################################################
 # This script installs required dependencies for Torch7
@@ -8,6 +9,7 @@
 install_openblas() {
     # Get and build OpenBlas (Torch is much better with a decent Blas)
     cd /tmp/
+    rm -rf OpenBLAS
     git clone https://github.com/xianyi/OpenBLAS.git
     cd OpenBLAS
     if [ $(getconf _NPROCESSORS_ONLN) == 1 ]; then
