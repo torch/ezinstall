@@ -133,12 +133,6 @@ elif [[ "$(uname)" == 'Linux' ]]; then
 
     # Install dependencies for Torch:
     if [[ $distribution == 'ubuntu' ]]; then
-        declare -a target_pkgs
-        target_pkgs=( build-essential gcc g++ curl \
-                      cmake libreadline-dev git-core libqt4-core libqt4-gui \
-                      libqt4-dev libjpeg-dev libpng-dev ncurses-dev \
-                      imagemagick libzmq3-dev gfortran unzip gnuplot \
-                      gnuplot-x11 ipython )
         sudo apt-get update
         # python-software-properties is required for apt-add-repository
         sudo apt-get install -y python-software-properties
@@ -165,7 +159,11 @@ elif [[ "$(uname)" == 'Linux' ]]; then
         fi
 
         sudo apt-get update
-        sudo apt-get install -y "${target_pkgs[@]}"
+        sudo apt-get install -y build-essential gcc g++ curl \
+            cmake libreadline-dev git-core libqt4-core libqt4-gui \
+            libqt4-dev libjpeg-dev libpng-dev ncurses-dev \
+            imagemagick libzmq3-dev gfortran unzip gnuplot \
+            gnuplot-x11 ipython
 
         install_openblas
 
