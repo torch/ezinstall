@@ -165,7 +165,12 @@ elif [[ "$(uname)" == 'Linux' ]]; then
             imagemagick libzmq3-dev gfortran unzip gnuplot \
             gnuplot-x11 ipython
 
-        install_openblas
+        if [[ $ubuntu_major_version -lt '14' ]]; then
+            # Install from source after installing git and build-essential
+            install_openblas
+        else
+            sudo apt-get install -y libopenblas-dev liblapack-dev
+        fi
 
     elif [[ $distribution == 'elementary' ]]; then
         declare -a target_pkgs
