@@ -169,7 +169,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
 
         if [[ $ubuntu_major_version -lt '14' ]]; then
             # Install from source after installing git and build-essential
-            install_openblas
+            install_openblas || true
         else
             sudo apt-get install -y libopenblas-dev liblapack-dev
         fi
@@ -198,7 +198,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
         sudo apt-get update
         sudo apt-get install -y "${target_pkgs[@]}"
 
-        install_openblas
+        install_openblas || true
 
     elif [[ $distribution == 'archlinux' ]]; then
         echo "Archlinux installation"
@@ -219,7 +219,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
         # if openblas is not installed yet
         pacman -Qs openblas &> /dev/null
         if [[ $? -ne 0 ]]; then
-            install_openblas_AUR
+            install_openblas_AUR || true
         else
             echo "OpenBLAS is already installed"
         fi
@@ -233,7 +233,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
                                 sox-devel sox zeromq3-devel \
                                 qt-devel qtwebkit-devel sox-plugins-freeworld \
                                 ipython
-            install_openblas
+            install_openblas || true
         elif [[ $fedora_major_version == '22' ]]; then
             #using dnf - since yum has been deprecated
             #sox-plugins-freeworld is not yet available in repos for F22
@@ -243,7 +243,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
             			ImageMagick GraphicsMagick-devel fftw-devel \
             			sox-devel sox qt-devel qtwebkit-devel \
             			python-ipython czmq czmq-devel
-            install_openblas
+            install_openblas || true
         else
             echo "Only Fedora 20 or Fedora 22 is supported for now, aborting."
             exit 1
@@ -258,7 +258,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
                                 sox-devel sox zeromq3-devel \
                                 qt-devel qtwebkit-devel sox-plugins-freeworld
             sudo yum install -y python-ipython
-            install_openblas
+            install_openblas || true
         else
             echo "Only CentOS 7 is supported for now, aborting."
             exit 1
@@ -271,7 +271,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
                             sox-devel sox zeromq3-devel \
                             qt-devel qtwebkit-devel sox-plugins-freeworld \
                             ipython libgfortran
-        install_openblas
+        install_openblas || true
     fi
 
 else
