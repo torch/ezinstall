@@ -111,7 +111,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
     elif [[ "$DISTRO" = "arch" ]]; then
         distribution="archlinux"
     # Detect Ubuntu
-    elif [[ "$DISTRO" = "ubuntu" ]]; then
+    elif [[ "$DISTRO" = "ubuntu" ]] || [[ "$DISTRO" = "linuxmint" ]]; then
         export DEBIAN_FRONTEND=noninteractive
         distribution="ubuntu"
         ubuntu_major_version="${VERSION%%.*}"
@@ -165,7 +165,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
             cmake libreadline-dev git-core libqt4-core libqt4-gui \
             libqt4-dev libjpeg-dev libpng-dev ncurses-dev \
             imagemagick libzmq3-dev gfortran unzip gnuplot \
-            gnuplot-x11 ipython
+            gnuplot-x11 ipython libreadline-dev
 
         if [[ $ubuntu_major_version -lt '14' ]]; then
             # Install from source after installing git and build-essential
